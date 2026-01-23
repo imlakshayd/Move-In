@@ -1,0 +1,18 @@
+{
+  "name": "move-in",
+  "version": "1.0.0",
+  "description": "## Structure - apps/web → React (Create React App) - apps/api → Node + Express",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install:all": "npm install --prefix apps/web && npm install --prefix apps/api",
+    "start:web": "npm start --prefix apps/web",
+    "start:api": "npm run dev --prefix apps/api"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
