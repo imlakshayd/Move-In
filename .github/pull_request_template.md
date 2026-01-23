@@ -5,8 +5,8 @@
 - 
 
 ## How did you test?
-- [ ] Ran locally
-- [ ] Lint/tests (if available)
+- [ ] Web: `npm test` / `npm run build`
+- [ ] API: started server and hit `/health`
 
 ## Screenshots (if UI)
 -
