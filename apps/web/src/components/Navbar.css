@@ -1,0 +1,90 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.navInner {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 900;
+  color: #0f172a;
+  text-decoration: none;
+}
+
+.brandIcon {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: #dcfce7;
+  color: #166534;
+  font-size: 16px;
+}
+
+.brandText {
+  font-size: 14px;
+}
+
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btnOutline {
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.linkBtn {
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 8px;
+  border: none;
+  background: transparent;
+  color: #0f172a;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btnPrimary {
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: none;
+  background: #16a34a;
+  color: #ffffff;
+  font-weight: 900;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+@media (max-width: 520px) {
+  .btnOutline {
+    display: none;
+  }
+}
