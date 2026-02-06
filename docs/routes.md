@@ -1,7 +1,7 @@
-# 🌐 Application Routes:
+# Application Routes:
 This document defines the main frontend routes for the Move-In platform.
 
-# 👤 Guest Routes:
+# Guest Routes:
 | Route          | Description          |
 
 | `/`            | Homepage             |
@@ -10,7 +10,7 @@ This document defines the main frontend routes for the Move-In platform.
 | `/login`       | Login page           |
 | `/register`    | Sign up              |
 
-# 🚚 Vendor Routes:
+# Vendor Routes:
 | Route                       | Description               |
 
 | `/vendor/dashboard`         | Vendor dashboard overview |
@@ -18,7 +18,7 @@ This document defines the main frontend routes for the Move-In platform.
 | `/vendor/listings/new`      | Create listing            |
 | `/vendor/listings/:id/edit` | Edit listing              |
 
-# 🧑‍💼 Admin / Staff Routes:
+# Admin / Staff Routes:
 | Route              | Description              |
 
 | `/admin/dashboard` | Admin overview           |

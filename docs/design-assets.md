@@ -1,4 +1,4 @@
-# 🎨 Design Assets
+# Design Assets
 # Figma Wireframes
 
 Vendor Dashboard and platform UI designs can be found here:

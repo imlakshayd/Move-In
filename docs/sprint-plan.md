@@ -1,16 +1,16 @@
-# 🏁 Move-In Sprint Plan
+# Move-In Sprint Plan
 
 This document outlines the development tasks for the current sprint.
 The goal is to coordinate frontend, backend, database, and documentation efforts.
 
 ---
-## 📅 Sprint Duration
-**Sprint Lengthw** 1–2 weeks  
+## Sprint Duration
+**Sprint Length** 1–2 weeks  
 **Objective:** Establish core system foundation and prepare integration between frontend and backend.
 
 ---
 
-## 👥 Team Roles
+## Team Roles
 
 | Ari -  Frontend (Landing + Core UI) |
 | Suthan - Database Management (PostgreSQL, Schemas) |
@@ -20,7 +20,7 @@ The goal is to coordinate frontend, backend, database, and documentation efforts
 
 ---
 
-## 🎯 Sprint Goals
+## Sprint Goals
 1. Frontend base screens implemented
 2. Backend service skeletons created
 3. Database schemas prepared
@@ -30,7 +30,7 @@ The goal is to coordinate frontend, backend, database, and documentation efforts
 
 ---
 
-## 🧩 Task Breakdown
+## Task Breakdown
 
 ### 🖥 Frontend (Ari)
 - Create landing page UI
@@ -59,7 +59,7 @@ The goal is to coordinate frontend, backend, database, and documentation efforts
 
 ---
 
-### 🎨 Design & Documentation (Sofia)
+### 🎨 Design & Documentation (Sofiia)
 - Define API endpoints and routing structure
 - Write feature documentation (Vendor Dashboard)
 - Create UI design system
@@ -76,14 +76,14 @@ The goal is to coordinate frontend, backend, database, and documentation efforts
 
 ---
 
-## 🔌 Integration Plan
+##  Integration Plan
 - Frontend will initially use mock data
 - Backend services prepared to match documented API routes
 - DB schemas ready before full backend implementation
-- Sofia’s API documentation used as reference for integration
+- API documentation used as reference for integration
 
 ---
-## 🚧 Risks & Consideratiions
+##  Risks & Considerations
 - Backend and frontend must follow the same route definitions
 - Database must be ready before backend logic
 - Design consistency maintained through UI Design System

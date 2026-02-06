@@ -1,10 +1,10 @@
-# 🔌 Move-In API Routes
+#  Move-In API Routes
 
 This document defines backend API endpoints for integration between 
 frontend and backend services.
 
 ---
-## 🔐 Authentication
+##  Authentication
 | Action | Method | Endpoint | Auth |
 
 | Register | POST | /api/auth/register | No |
@@ -12,7 +12,7 @@ frontend and backend services.
 | Get Profile | GET | /api/auth/me | Yes |
 
 
-## 🚚 Vendor Endpoints
+##  Vendor Endpoints
 | Action | Method | Endpoint | Auth |
 
 | Get Vendor Dashboard Stats | GET | /api/vendor/dashboard | Yes (Vendor) |
@@ -23,7 +23,7 @@ frontend and backend services.
 
 ---
 
-## 🔍 Public Listings
+##  Public Listings
 | Action | Method | Endpoint | Auth |
 
 | Search Listings | GET | /api/listings/search | No |
@@ -31,7 +31,7 @@ frontend and backend services.
 
 ---
 
-## 📦 Booking Endpoints
+##  Booking Endpoints
 | Action | Method | Endpoint | Auth |
 
 | Create Booking | POST | /api/bookings | Yes (Customer) |
@@ -40,7 +40,7 @@ frontend and backend services.
 
 ---
 
-## 🛡 Admin / Staff
+##  Admin / Staff
 | Action | Method | Endpoint | Auth |
 
 | Get All Users | GET | /api/admin/users | Yes (Admin) |
@@ -48,6 +48,6 @@ frontend and backend services.
 
 ---
 
-## 📌 Notes
+##  Notes
 - All protected routes require JWT authentication.
-- Role-based access control must be implemented.
+

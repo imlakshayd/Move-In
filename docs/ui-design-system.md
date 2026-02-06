@@ -1,14 +1,13 @@
-# 🎨 Move-In UI Design System
-
+# Move-In UI Design System
+# Note:  these UI's can be changed
 ## 1 - Purpose
 This document defines the UI standards for the Move-In web application. The goal is a consistent, modern, and accessible experience across all pages and user roles (Guest, Customer, Vendor, Support Staff, Manager).
 
-## 2 - Brand Style (Look & Feel)
-**Design vibe:** clean, friendly, trustworthy  
+## 2 - Brand Style
 **Core style:** light UI, soft shadows, rounded corners, lots of spacing  
-**Primary brand mood:** blue/green gradient (used in hero sections and key highlights)
+**Primary:** blue/green gradient (used in hero sections and key highlights)
 
-## 3 - Color Palette - Primary Brand Colors
+## 3 - Color Palette 
 | Usage | Name | Hex |
 |------|------|-----|
 | Primary (buttons/links) | Move-In Blue | **#1D72F2** |
@@ -34,10 +33,9 @@ This document defines the UI standards for the Move-In web application. The goal
 
 
 ## 4 - Typography
-Use a clean sans-serif font (system default is okay).
+Use a clean sans-serif font .
 
 | Element | Size | Weight |
-
 | Page Title (H1) | 28–32px | Bold |
 | Section Title (H2) | 20–24px | Semi-Bold |
 | Card Title (H3) | 16–18px | Semi-Bold |
@@ -45,7 +43,7 @@ Use a clean sans-serif font (system default is okay).
 | Helper Text | 12–13px | Regular |
 | Button Text | 14–16px | Medium |
 
-## 5 - Layout & Spacing
+## 5 - Layout & Spacing * can be changed
 - Base spacing unit: **8px**
 - Common spacing: **16px / 24px / 32px**
 - Page padding: **24px**
@@ -113,15 +111,3 @@ Use clear, non-dramatic messages:
 - Keep navigation consistent across roles
 - Vendor pages should clearly show “Vendor” context (Vendor Dashboard, My Listings, etc.)
 
-## 12 - Accessibility & UX Rules
-- Maintain readable contrast (especially on gradient backgrounds)
-- Buttons must look clickable (size, hover, spacing)
-- Avoid long forms: group fields into sections
-- Mobile-friendly layouts required (test in small screen)
-
-## 13 - Consistency Requirement
-All UI components must follow this design system to maintain a consistent experience across:
-- Guest browsing pages
-- Customer booking flow
-- Vendor Dashboard
-- Admin/Support dashboards
