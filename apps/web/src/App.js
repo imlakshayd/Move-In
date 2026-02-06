@@ -1,12 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import HomePage from "./pages/HomePage";
-import ListingsPage from "./pages/ListingsPage"; 
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
 import ListYourTruckPage from "./pages/ListYourTruckPage";
 import CustomerDashboardPage from "./pages/CustomerDashboardPage";
 import VendorDetailsPage from "./pages/VendorDetailsPage";
+import ListingsPage from "./pages/ListingsPage";          
+import CompareListingsPage from "./pages/CompareListingsPage"; 
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -18,14 +19,17 @@ export default function App() {
       <Routes>
         {/* Public */}
         <Route path="/" element={<HomePage />} />
-        <Route path="/listings" element={<ListingsPage />} /> 
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/signup" element={<SignUpPage />} />
 
-        {/* Vendor Details (public) */}
+        {/* Browse + Vendor details */}
+        <Route path="/listings" element={<ListingsPage />} />
         <Route path="/vendor/:vendorId" element={<VendorDetailsPage />} />
 
-        {/* Customer Dashboard (CUSTOMER ONLY) */}
+        {/*  Compare page */}
+        <Route path="/compare" element={<CompareListingsPage />} />
+
+        {/* Customer only */}
         <Route
           path="/customer"
           element={
@@ -35,7 +39,7 @@ export default function App() {
           }
         />
 
-        {/* List Your Truck (VENDOR ONLY) */}
+        {/* Vendor only */}
         <Route
           path="/list-your-truck"
           element={
