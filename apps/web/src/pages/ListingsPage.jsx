@@ -130,19 +130,12 @@ function money(n) {
 export default function ListingsPage() {
   const navigate = useNavigate();
 
-  
-  const [viewMode, setViewMode] = useState("grid"); 
-
-  
+  const [viewMode, setViewMode] = useState("grid"); // grid | list
   const [vehicleTypes, setVehicleTypes] = useState([]);
   const [verifiedOnly, setVerifiedOnly] = useState(false);
   const [maxPrice, setMaxPrice] = useState(200);
   const [location, setLocation] = useState("all");
-
-  
   const [sort, setSort] = useState("Recommended");
-
-
   const [compareIds, setCompareIds] = useState([]);
 
   const locations = useMemo(() => {
@@ -151,19 +144,19 @@ export default function ListingsPage() {
   }, []);
 
   const filteredAndSorted = useMemo(() => {
-    
     let arr = VENDORS.filter((v) => {
-      const typeOk = vehicleTypes.length === 0 || vehicleTypes.includes(v.vehicleType);
+      const typeOk =
+        vehicleTypes.length === 0 || vehicleTypes.includes(v.vehicleType);
       const verifiedOk = !verifiedOnly || v.verified;
       const priceOk = v.price <= maxPrice;
       const locationOk = location === "all" || v.location === location;
       return typeOk && verifiedOk && priceOk && locationOk;
     });
 
-    
     const sorters = {
       Recommended: (a, b) => {
-        const score = (x) => (x.verified ? 2 : 0) + (x.available ? 2 : 0) + x.rating;
+        const score = (x) =>
+          (x.verified ? 2 : 0) + (x.available ? 2 : 0) + x.rating;
         return score(b) - score(a);
       },
       "Price: Low to High": (a, b) => a.price - b.price,
@@ -174,6 +167,13 @@ export default function ListingsPage() {
 
     return [...arr].sort(sorters[sort] || sorters.Recommended);
   }, [vehicleTypes, verifiedOnly, maxPrice, location, sort]);
+
+  // ✅ Option A: Actually USE compareSelectedVendors
+  const compareSelectedVendors = useMemo(() => {
+    return compareIds
+      .map((id) => VENDORS.find((v) => v.id === id))
+      .filter(Boolean);
+  }, [compareIds]);
 
   const toggleVehicleType = (type) => {
     setVehicleTypes((prev) =>
@@ -195,21 +195,20 @@ export default function ListingsPage() {
   const onToggleCompare = (vendorId) => {
     setCompareIds((prev) => {
       if (prev.includes(vendorId)) return prev.filter((id) => id !== vendorId);
-      if (prev.length >= 3) return prev; 
+      if (prev.length >= 3) return prev; // max 3
       return [...prev, vendorId];
     });
   };
 
   const onCompareNow = () => {
-    if (compareIds.length < 2) return;
-    const query = compareIds.join(",");
+    if (compareSelectedVendors.length < 2) return;
+    const query = compareSelectedVendors.map((v) => v.id).join(",");
     navigate(`/compare?ids=${encodeURIComponent(query)}`);
   };
 
-  const compareSelectedVendors = useMemo(
-    () => compareIds.map((id) => VENDORS.find((v) => v.id === id)).filter(Boolean),
-    [compareIds]
-  );
+  const removeFromCompare = (vendorId) => {
+    setCompareIds((prev) => prev.filter((id) => id !== vendorId));
+  };
 
   return (
     <div className="listPage">
@@ -266,7 +265,11 @@ export default function ListingsPage() {
 
             <div className="filterBlock">
               <div className="filterLabel">Location</div>
-              <select className="select" value={location} onChange={(e) => setLocation(e.target.value)}>
+              <select
+                className="select"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+              >
                 <option value="all">All locations</option>
                 {locations
                   .filter((x) => x !== "all")
@@ -294,75 +297,51 @@ export default function ListingsPage() {
 
           {/* Results */}
           <main className="results">
-            {/*  Compare bar (shows only when at least 1 selected) */}
-            {compareIds.length > 0 && (
+            {/* Compare bar */}
+            {compareSelectedVendors.length > 0 && (
               <div className="compareBar">
                 <div className="compareBarLeft">
-                  <strong>{compareIds.length}</strong> items selected for comparison{" "}
+                  <strong>{compareSelectedVendors.length}</strong> items selected
+                  for comparison{" "}
                   <span className="compareHint">(Select up to 3)</span>
                 </div>
 
                 <div className="compareBarRight">
                   <button
-                    className={`compareNowBtn ${compareIds.length < 2 ? "compareNowDisabled" : ""}`}
+                    className={`compareNowBtn ${
+                      compareSelectedVendors.length < 2
+                        ? "compareNowDisabled"
+                        : ""
+                    }`}
                     type="button"
                     onClick={onCompareNow}
-                    disabled={compareIds.length < 2}
-                    title={compareIds.length < 2 ? "Select at least 2 to compare" : "Compare now"}
+                    disabled={compareSelectedVendors.length < 2}
+                    title={
+                      compareSelectedVendors.length < 2
+                        ? "Select at least 2 to compare"
+                        : "Compare now"
+                    }
                   >
                     Compare Now
                   </button>
 
-                  <button className="compareX" type="button" onClick={() => setCompareIds([])} title="Clear">
+                  <button
+                    className="compareX"
+                    type="button"
+                    onClick={() => setCompareIds([])}
+                    title="Clear"
+                  >
                     ×
                   </button>
                 </div>
               </div>
             )}
 
-            <div className="resultsToolbarPanel">
-              <div className="resultsToolbar">
-                <select
-                  className="select sortSelect"
-                  value={sort}
-                  onChange={(e) => setSort(e.target.value)}
-                >
-                  <option>Recommended</option>
-                  <option>Price: Low to High</option>
-                  <option>Price: High to Low</option>
-                  <option>Top Rated</option>
-                  <option>Most Reviews</option>
-                </select>
-
-                {/* Grid/List buttons */}
-                <div className="toolbarIcons">
-                  <button
-                    className={`iconBtn ${viewMode === "grid" ? "iconBtnActive" : ""}`}
-                    type="button"
-                    title="Grid view"
-                    onClick={() => setViewMode("grid")}
-                  >
-                    ▦
-                  </button>
-
-                  <button
-                    className={`iconBtn ${viewMode === "list" ? "iconBtnActive" : ""}`}
-                    type="button"
-                    title="List view"
-                    onClick={() => setViewMode("list")}
-                  >
-                    ≡
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div className={`cards ${viewMode === "list" ? "cardsList" : "cardsGrid"}`}>
-              {filteredAndSorted.map((v) => {
-                const isCompared = compareIds.includes(v.id);
-
-                return (
-                  <div key={v.id} className={`vendorCard2 ${isCompared ? "vendorCardSelected" : ""}`}>
+            {/* ✅ Compare preview cards (like your screenshot) */}
+            {compareSelectedVendors.length > 0 && (
+              <div className="comparePreview">
+                {compareSelectedVendors.map((v) => (
+                  <div key={v.id} className="vendorCard2 vendorCardSelected">
                     <div className="imgArea">
                       <div className="truckIcon">🚚</div>
                     </div>
@@ -391,14 +370,139 @@ export default function ListingsPage() {
                       <div className="desc">{v.desc}</div>
 
                       <div className="actions">
-                        <button className="btnGreen" type="button" onClick={() => onViewDetails(v.id)}>
+                        <button
+                          className="btnGreen"
+                          type="button"
+                          onClick={() => onViewDetails(v.id)}
+                        >
                           View Details
                         </button>
 
                         <button
-                          className={`btnGhost ${isCompared ? "btnGhostDanger" : ""}`}
+                          className="btnGhost btnGhostDanger"
+                          type="button"
+                          onClick={() => removeFromCompare(v.id)}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Toolbar */}
+            <div className="resultsToolbarPanel">
+              <div className="resultsToolbar">
+                <select
+                  className="select sortSelect"
+                  value={sort}
+                  onChange={(e) => setSort(e.target.value)}
+                >
+                  <option>Recommended</option>
+                  <option>Price: Low to High</option>
+                  <option>Price: High to Low</option>
+                  <option>Top Rated</option>
+                  <option>Most Reviews</option>
+                </select>
+
+                {/* Grid/List */}
+                <div className="toolbarIcons">
+                  <button
+                    className={`iconBtn ${
+                      viewMode === "grid" ? "iconBtnActive" : ""
+                    }`}
+                    type="button"
+                    title="Grid view"
+                    onClick={() => setViewMode("grid")}
+                  >
+                    ▦
+                  </button>
+
+                  <button
+                    className={`iconBtn ${
+                      viewMode === "list" ? "iconBtnActive" : ""
+                    }`}
+                    type="button"
+                    title="List view"
+                    onClick={() => setViewMode("list")}
+                  >
+                    ≡
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Results list */}
+            <div
+              className={`cards ${
+                viewMode === "list" ? "cardsList" : "cardsGrid"
+              }`}
+            >
+              {filteredAndSorted.map((v) => {
+                const isCompared = compareIds.includes(v.id);
+
+                return (
+                  <div
+                    key={v.id}
+                    className={`vendorCard2 ${
+                      isCompared ? "vendorCardSelected" : ""
+                    }`}
+                  >
+                    <div className="imgArea">
+                      <div className="truckIcon">🚚</div>
+                    </div>
+
+                    <div className="body">
+                      <div className="topRow">
+                        <div className="name">{v.name}</div>
+                        <div className="price">{money(v.price)}</div>
+                      </div>
+
+                      <div className="tagRow2">
+                        {v.verified && <span className="verifiedTag">Verified</span>}
+                        {!v.available && (
+                          <span className="unavailableTag">Currently Unavailable</span>
+                        )}
+                      </div>
+
+                      <div className="meta">
+                        <span className="star">★</span>
+                        <span>{v.rating}</span>
+                        <span className="muted">({v.reviews} reviews)</span>
+                      </div>
+
+                      <div className="submeta">
+                        <div>🚚 {v.vehicleType}</div>
+                        <div>📍 {v.location}</div>
+                      </div>
+
+                      <div className="desc">{v.desc}</div>
+
+                      <div className="actions">
+                        <button
+                          className="btnGreen"
+                          type="button"
+                          onClick={() => onViewDetails(v.id)}
+                        >
+                          View Details
+                        </button>
+
+                        <button
+                          className={`btnGhost ${
+                            isCompared ? "btnGhostDanger" : ""
+                          }`}
                           type="button"
                           onClick={() => onToggleCompare(v.id)}
+                          disabled={!v.available && !isCompared}
+                          title={
+                            !v.available && !isCompared
+                              ? "Unavailable"
+                              : isCompared
+                              ? "Remove from compare"
+                              : "Add to compare"
+                          }
                         >
                           {isCompared ? "Remove" : "Compare"}
                         </button>
