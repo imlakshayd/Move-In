@@ -130,7 +130,7 @@ function money(n) {
 export default function ListingsPage() {
   const navigate = useNavigate();
 
-  const [viewMode, setViewMode] = useState("grid"); // grid | list
+  const [viewMode, setViewMode] = useState("grid"); 
   const [vehicleTypes, setVehicleTypes] = useState([]);
   const [verifiedOnly, setVerifiedOnly] = useState(false);
   const [maxPrice, setMaxPrice] = useState(200);
@@ -168,7 +168,7 @@ export default function ListingsPage() {
     return [...arr].sort(sorters[sort] || sorters.Recommended);
   }, [vehicleTypes, verifiedOnly, maxPrice, location, sort]);
 
-  // ✅ Option A: Actually USE compareSelectedVendors
+  
   const compareSelectedVendors = useMemo(() => {
     return compareIds
       .map((id) => VENDORS.find((v) => v.id === id))
@@ -195,7 +195,7 @@ export default function ListingsPage() {
   const onToggleCompare = (vendorId) => {
     setCompareIds((prev) => {
       if (prev.includes(vendorId)) return prev.filter((id) => id !== vendorId);
-      if (prev.length >= 3) return prev; // max 3
+      if (prev.length >= 3) return prev; 
       return [...prev, vendorId];
     });
   };
@@ -337,7 +337,7 @@ export default function ListingsPage() {
               </div>
             )}
 
-            {/* ✅ Compare preview cards (like your screenshot) */}
+            {/*  Compare preview cards  */}
             {compareSelectedVendors.length > 0 && (
               <div className="comparePreview">
                 {compareSelectedVendors.map((v) => (
