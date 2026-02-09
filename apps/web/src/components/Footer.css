@@ -1,0 +1,89 @@
+.mi-footer {
+  background: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 64px;
+}
+
+.mi-footer__container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 44px 20px;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.mi-footer__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mi-footer__truck {
+  font-size: 18px;
+}
+
+.mi-footer__name {
+  font-weight: 800;
+  font-size: 15px;
+  color: #111827;
+}
+
+.mi-footer__desc {
+  margin-top: 12px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #6b7280;
+  max-width: 260px;
+}
+
+.mi-footer__social {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.mi-footer__icon {
+  width: 18px;
+  height: 18px;
+  border: none;
+  background: transparent;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  font-size: 18px;
+}
+
+.mi-footer__icon:hover {
+  color: #6b7280;
+}
+
+.mi-footer__title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 12px;
+}
+
+.mi-footer__link {
+  display: block;
+  font-size: 12px;
+  color: #6b7280;
+  text-decoration: none;
+  margin-bottom: 10px;
+}
+
+.mi-footer__link:hover {
+  color: #111827;
+  text-decoration: underline;
+}
+
+.mi-footer__bottom {
+  border-top: 1px solid #e5e7eb;
+  text-align: center;
+  padding: 18px 12px;
+  font-size: 11px;
+  color: #6b7280;
+}

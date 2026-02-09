@@ -1,0 +1,413 @@
+/* apps/web/src/pages/HomePage.css */
+
+.page {
+  background: #fff;
+}
+
+/* keeps everything centered like screenshot */
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.centerText {
+  text-align: center;
+}
+
+.hero {
+  background: linear-gradient(90deg, #3fb34d 0%, #1f8fe5 100%);
+  padding: 54px 0 46px;
+  color: #fff;
+}
+
+.heroInner {
+  text-align: center;
+}
+
+.heroKicker {
+  font-size: 12px;
+  opacity: 0.9;
+  margin: 0 0 8px;
+}
+
+.heroTitle {
+  margin: 0 auto 18px;
+  max-width: 780px;
+  font-size: 16px;
+  line-height: 1.6;
+  font-weight: 700;
+  opacity: 0.95;
+}
+
+.searchRow {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.searchInput {
+  width: 280px;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+}
+
+.searchBtn {
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.statsRow {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 22px;
+}
+
+.statValue {
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.statLabel {
+  font-size: 10px;
+  opacity: 0.9;
+  margin-top: 3px;
+}
+
+.section {
+  padding: 48px 0;
+}
+
+.sectionTitle {
+  font-size: 14px;
+  font-weight: 800;
+  margin: 0;
+  color: #111827;
+}
+
+.sectionTitle.left,
+.sectionSubtitle.left {
+  text-align: left;
+}
+
+.sectionSubtitle {
+  font-size: 11px;
+  color: #6b7280;
+  margin-top: 8px;
+}
+
+.cardGrid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  justify-items: center;
+}
+
+.card {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 18px 14px;
+}
+
+.featureCard {
+  max-width: 240px;
+}
+
+.iconCircle {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 10px;
+  background: #ecfdf5;
+  color: #16a34a;
+  font-size: 14px;
+}
+
+.cardTitle {
+  font-size: 12px;
+  font-weight: 800;
+  margin: 0;
+  color: #111827;
+}
+
+.cardText {
+  font-size: 10px;
+  color: #6b7280;
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+.rowBetween {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ghostBtn {
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.vendorGrid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* ✅ Vendor card base */
+.vendorCard {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  width: 100%;
+  display: block;
+}
+
+/* ✅ IMPORTANT: when VendorCard is a BUTTON, remove default button style */
+.vendorCardClickable {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.vendorCardClickable:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+/* ✅ Keyboard accessibility */
+.vendorCardClickable:focus-visible {
+  outline: 3px solid rgba(31, 143, 229, 0.35);
+  outline-offset: 2px;
+}
+
+/* keeps same image height like your screenshot */
+.vendorImg {
+  height: 120px; /* was 90px — screenshot looks taller */
+  display: grid;
+  place-items: center;
+  background: #f3f4f6;
+  color: #6b7280;
+  font-size: 26px;
+}
+
+.vendorBody {
+  padding: 12px;
+  min-height: 92px; /* helps card height consistency */
+}
+
+.vendorTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.vendorName {
+  font-size: 11px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.vendorPrice {
+  font-size: 11px;
+  font-weight: 800;
+  color: #16a34a;
+}
+
+.tagRow {
+  margin-top: 8px;
+}
+
+.tagPill {
+  display: inline-block;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #ecfdf5;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+}
+
+.vendorMeta {
+  margin-top: 8px;
+  font-size: 10px;
+  color: #111827;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.stars {
+  color: #f59e0b;
+}
+
+.muted {
+  color: #6b7280;
+}
+
+.vendorLocation {
+  margin-top: 6px;
+  font-size: 10px;
+  color: #6b7280;
+}
+
+.testimonialCard {
+  max-width: 260px;
+}
+
+.starsText {
+  color: #f59e0b;
+  font-size: 11px;
+}
+
+.quote {
+  font-size: 10px;
+  line-height: 1.6;
+  color: #111827;
+  margin: 10px 0 12px;
+}
+
+.personName {
+  font-size: 11px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.personRole {
+  font-size: 10px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+/* ✅ Bottom CTA banner */
+.ctaBanner {
+  background: linear-gradient(90deg, #3fb34d 0%, #1f8fe5 100%);
+  padding: 42px 0;
+  color: #fff;
+}
+
+.ctaBannerInner {
+  text-align: center;
+}
+
+.ctaSmall {
+  font-size: 10px;
+  margin: 0 0 6px;
+  opacity: 0.95;
+}
+
+.ctaBig {
+  margin: 0 auto 14px;
+  max-width: 650px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.ctaActions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.ctaActionBtn {
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 6px;
+  border: none;
+  background: #fff;
+  color: #111827;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ✅ How it works */
+.howSection {
+  padding: 44px 0 34px;
+}
+
+.howTitle {
+  font-size: 13px;
+  font-weight: 800;
+  margin: 0;
+  color: #111827;
+}
+
+.howSub {
+  margin-top: 8px;
+  font-size: 10px;
+  color: #6b7280;
+}
+
+.howGrid {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.howStep {
+  text-align: center;
+}
+
+.howNum {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 12px;
+  font-weight: 800;
+  color: #fff;
+  font-size: 12px;
+}
+
+.howNumGreen {
+  background: #22c55e;
+}
+
+.howNumBlue {
+  background: #1f8fe5;
+}
+
+.howStepTitle {
+  font-size: 11px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.howStepText {
+  margin-top: 8px;
+  font-size: 10px;
+  color: #6b7280;
+  line-height: 1.6;
+}

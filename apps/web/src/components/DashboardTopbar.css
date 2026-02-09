@@ -1,0 +1,159 @@
+.dtb-wrap {
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.dtb {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.dtb-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #111827;
+  font-weight: 800;
+}
+
+.dtb-truck { font-size: 18px; }
+.dtb-brand { font-size: 16px; }
+
+.dtb-search {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
+.dtb-search input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.dtb-profile {
+  position: relative;
+}
+
+.dtb-profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 10px;
+}
+
+.dtb-profile-btn:hover {
+  background: #f9fafb;
+}
+
+.dtb-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: #22c55e;
+  color: white;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.dtb-name {
+  font-weight: 700;
+  color: #111827;
+}
+
+.dtb-caret {
+  color: #6b7280;
+}
+
+.dtb-menu {
+  position: absolute;
+  right: 0;
+  top: 44px;
+  width: 240px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  overflow: hidden;
+  z-index: 50;
+}
+
+.dtb-menu-top {
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.dtb-menu-name {
+  font-weight: 800;
+  color: #111827;
+}
+
+.dtb-menu-email {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+.dtb-menu-items {
+  padding: 6px;
+}
+
+.dtb-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #111827;
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.dtb-item:hover {
+  background: #f9fafb;
+}
+
+.dtb-item-btn {
+  font-family: inherit;
+}
+
+.dtb-menu-footer {
+  padding: 10px 12px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.dtb-signout {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #fecaca;
+  background: #fff;
+  color: #ef4444;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.dtb-signout:hover {
+  background: #fef2f2;
+}
