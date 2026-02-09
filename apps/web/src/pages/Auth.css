@@ -1,23 +1,32 @@
 /* apps/web/src/pages/Auth.css */
 
+* {
+  box-sizing: border-box;
+}
+
 .authPage {
   min-height: 100vh;
   background: #ffffff;
   color: #0f172a;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
+  /* prevents “shrunk text” on some browsers */
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
 }
 
 .authMain {
-  padding: 48px 16px;
+  padding: 56px 16px;
   display: grid;
   place-items: center;
 }
 
+/* ✅ Bigger default card (Sign In) */
 .authCard {
-  width: min(420px, 100%);
+  width: min(560px, 92vw);
   border: 1px solid #e2e8f0;
   border-radius: 14px;
-  padding: 22px;
+  padding: 28px;
   box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
   background: #ffffff;
 }
@@ -25,22 +34,22 @@
 .authTitle {
   margin: 0;
   text-align: center;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 900;
 }
 
 .authSubtitle {
-  margin: 8px 0 18px;
+  margin: 8px 0 20px;
   text-align: center;
   color: #64748b;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .fieldLabel {
   display: block;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
-  margin: 10px 0 6px;
+  margin: 12px 0 6px;
   color: #0f172a;
 }
 
@@ -57,7 +66,7 @@
   gap: 10px;
   border: 1px solid #e2e8f0;
   border-radius: 10px;
-  padding: 10px 12px;
+  padding: 12px 14px;
   background: #f8fafc;
   transition: border-color 140ms ease, box-shadow 140ms ease;
 }
@@ -68,7 +77,7 @@
 }
 
 .inputIcon {
-  font-size: 14px;
+  font-size: 15px;
   opacity: 0.8;
 }
 
@@ -77,7 +86,7 @@
   border: none;
   outline: none;
   background: transparent;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .linkSmall {
@@ -94,18 +103,36 @@
   text-decoration: underline;
 }
 
+/* ✅ FIXED: remember me row (no wrapping + aligned) */
 .rememberRow {
-  display: flex;
+  display: inline-flex;        /* keeps checkbox + text tight */
   align-items: center;
+  justify-content: flex-start;
   gap: 8px;
-  margin: 12px 0 14px;
+  margin: 14px 0 16px;
   color: #334155;
   font-size: 13px;
+  white-space: nowrap;         /* prevents "Remember" / "me" wrapping */
+}
+
+.rememberRow input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  accent-color: #16a34a;
+  cursor: pointer;
+  margin: 0;
+}
+
+.rememberRow label {
+  margin: 0;
+  font-weight: 700;
+  cursor: pointer;
+  line-height: 1;
 }
 
 .authBtn {
   width: 100%;
-  height: 38px;
+  height: 44px;
   border: none;
   border-radius: 10px;
   background: #16a34a;
@@ -125,7 +152,7 @@
 }
 
 .quickLogin {
-  margin-top: 16px;
+  margin-top: 18px;
 }
 
 .quickTitle {
@@ -142,7 +169,7 @@
 }
 
 .quickBtn {
-  height: 34px;
+  height: 40px;
   border-radius: 10px;
   border: 1px solid #e2e8f0;
   background: #ffffff;
@@ -162,7 +189,7 @@
 
 /* NEW: role selection UI */
 .roleHint {
-  margin: 6px 0 12px;
+  margin: 8px 0 12px;
   font-size: 12px;
   color: #64748b;
   text-align: center;
@@ -221,26 +248,26 @@
 .linkInlineBtn:hover {
   text-decoration: underline;
 }
-/* =========================
-   SIGN UP: segmented switch (exact pill)
-========================= */
 
+/* =========================
+   SIGN UP: segmented switch (pill)
+========================= */
 .segmented {
   width: 100%;
-  background: #f1f5f9; /* light gray bar */
+  background: #f1f5f9;
   border: 1px solid #e2e8f0;
   border-radius: 999px;
-  padding: 6px; /* space around white pill */
+  padding: 6px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   margin: 12px 0 18px;
 }
 
 .segmentBtn {
-  height: 40px;
+  height: 42px;
   border: none;
   border-radius: 999px;
-  background: transparent; /* inactive */
+  background: transparent;
   font-weight: 800;
   font-size: 14px;
   cursor: pointer;
@@ -249,14 +276,11 @@
 }
 
 .segmentBtnActive {
-  background: #ffffff; /* active white pill */
+  background: #ffffff;
   box-shadow: 0 10px 22px rgba(15, 23, 42, 0.12);
 }
 
-/* =========================
-   SIGN UP: wider card + 2-column layout
-========================= */
-
+/* SIGN UP wide layout */
 .authCardWide {
   width: min(760px, 100%);
 }
@@ -267,7 +291,16 @@
   gap: 14px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
+  .authMain {
+    padding: 40px 14px;
+  }
+
+  .authCard {
+    width: min(520px, 94vw);
+    padding: 22px;
+  }
+
   .twoCol {
     grid-template-columns: 1fr;
   }
