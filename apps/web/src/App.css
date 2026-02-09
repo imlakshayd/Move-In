@@ -1,38 +1,282 @@
-.App {
+.page {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: #0f172a;
+  background: #ffffff;
+}
+
+.hero {
+  background: linear-gradient(135deg, #22c55e 0%, #3b82f6 60%, #2563eb 100%);
+  color: white;
+  padding: 64px 16px 48px;
+}
+
+.heroInner {
+  max-width: 1050px;
+  margin: 0 auto;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.heroKicker {
+  opacity: 0.9;
+  font-weight: 600;
+  margin: 0 0 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.heroTitle {
+  max-width: 900px;
+  margin: 0 auto 24px;
+  font-size: 28px;
+  line-height: 1.35;
+  font-weight: 800;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.searchRow {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  gap: 10px;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  max-width: 760px;
+  margin: 0 auto 28px;
 }
 
-.App-link {
-  color: #61dafb;
+.searchInput {
+  width: min(560px, 100%);
+  height: 44px;
+  border-radius: 10px;
+  border: none;
+  padding: 0 14px;
+  outline: none;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.searchBtn {
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 800;
+  background: white;
+  color: #0f172a;
+}
+
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.statValue {
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.statLabel {
+  opacity: 0.9;
+  font-size: 13px;
+}
+
+.section {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 44px 16px;
+}
+
+.sectionTitle {
+  margin: 0;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.sectionSubtitle {
+  margin: 10px 0 26px;
+  text-align: center;
+  color: #64748b;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+}
+
+.iconCircle {
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  background: #eff6ff;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  margin: 0 auto 10px;
+}
+
+.cardTitle {
+  text-align: center;
+  margin: 8px 0 6px;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.cardText {
+  text-align: center;
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.rowBetween {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ghostBtn {
+  border: 1px solid #e2e8f0;
+  background: white;
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.vendorGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.vendorCard {
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+}
+
+.vendorImg {
+  height: 120px;
+  background: #f1f5f9;
+  display: grid;
+  place-items: center;
+  font-size: 34px;
+}
+
+.vendorBody {
+  padding: 14px;
+}
+
+.vendorTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.vendorName {
+  font-weight: 900;
+}
+
+.vendorPrice {
+  font-weight: 900;
+  color: #16a34a;
+}
+
+.vendorTag {
+  display: inline-block;
+  margin: 10px 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  background: #dcfce7;
+  color: #166534;
+}
+
+.vendorMeta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.stars {
+  color: #f59e0b;
+}
+
+.muted {
+  color: #94a3b8;
+}
+
+.vendorLocation {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.starsText {
+  font-weight: 900;
+  color: #f59e0b;
+  margin-bottom: 10px;
+}
+
+.quote {
+  margin: 0 0 14px;
+  color: #334155;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.personName {
+  font-weight: 900;
+}
+
+.personRole {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.footer {
+  padding: 22px 16px;
+  border-top: 1px solid #e2e8f0;
+  text-align: center;
+  color: #64748b;
+}
+
+@media (max-width: 900px) {
+  .cardGrid,
+  .vendorGrid,
+  .statsRow {
+    grid-template-columns: 1fr;
   }
-  to {
-    transform: rotate(360deg);
+
+  .searchRow {
+    flex-direction: column;
+  }
+
+  .searchInput {
+    width: 100%;
+  }
+
+  .rowBetween {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sectionTitle,
+  .sectionSubtitle {
+    text-align: left;
   }
 }

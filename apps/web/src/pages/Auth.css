@@ -1,0 +1,274 @@
+/* apps/web/src/pages/Auth.css */
+
+.authPage {
+  min-height: 100vh;
+  background: #ffffff;
+  color: #0f172a;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+.authMain {
+  padding: 48px 16px;
+  display: grid;
+  place-items: center;
+}
+
+.authCard {
+  width: min(420px, 100%);
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+  background: #ffffff;
+}
+
+.authTitle {
+  margin: 0;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.authSubtitle {
+  margin: 8px 0 18px;
+  text-align: center;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.fieldLabel {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  margin: 10px 0 6px;
+  color: #0f172a;
+}
+
+.rowBetweenAuth {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.inputWrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #f8fafc;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.inputWrap:focus-within {
+  border-color: #16a34a;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.14);
+}
+
+.inputIcon {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.authInput {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+}
+
+.linkSmall {
+  border: none;
+  background: transparent;
+  color: #16a34a;
+  font-weight: 800;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 0;
+}
+
+.linkSmall:hover {
+  text-decoration: underline;
+}
+
+.rememberRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0 14px;
+  color: #334155;
+  font-size: 13px;
+}
+
+.authBtn {
+  width: 100%;
+  height: 38px;
+  border: none;
+  border-radius: 10px;
+  background: #16a34a;
+  color: white;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform 120ms ease, filter 120ms ease, box-shadow 120ms ease;
+}
+
+.authBtn:hover {
+  filter: brightness(0.98);
+  box-shadow: 0 10px 20px rgba(22, 163, 74, 0.22);
+}
+
+.authBtn:active {
+  transform: translateY(1px);
+}
+
+.quickLogin {
+  margin-top: 16px;
+}
+
+.quickTitle {
+  font-size: 12px;
+  font-weight: 800;
+  color: #64748b;
+  margin-bottom: 10px;
+}
+
+.quickGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.quickBtn {
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  font-weight: 800;
+  cursor: pointer;
+  transition: border-color 140ms ease, box-shadow 140ms ease, transform 120ms ease;
+}
+
+.quickBtn:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 8px 14px rgba(15, 23, 42, 0.06);
+}
+
+.quickBtn:active {
+  transform: translateY(1px);
+}
+
+/* NEW: role selection UI */
+.roleHint {
+  margin: 6px 0 12px;
+  font-size: 12px;
+  color: #64748b;
+  text-align: center;
+}
+
+.roleSelected {
+  color: #16a34a;
+  font-weight: 900;
+  text-transform: capitalize;
+}
+
+.roleMissing {
+  color: #ef4444;
+  font-weight: 900;
+}
+
+.quickBtnActive {
+  border-color: #16a34a !important;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.14);
+}
+
+.authBottom {
+  margin-top: 14px;
+  text-align: center;
+  color: #475569;
+  font-size: 13px;
+}
+
+.linkInline {
+  color: #16a34a;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.linkInline:hover {
+  text-decoration: underline;
+}
+
+.authFinePrint {
+  margin-top: 14px;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.linkInlineBtn {
+  border: none;
+  background: transparent;
+  color: #16a34a;
+  font-weight: 900;
+  cursor: pointer;
+  padding: 0;
+}
+
+.linkInlineBtn:hover {
+  text-decoration: underline;
+}
+/* =========================
+   SIGN UP: segmented switch (exact pill)
+========================= */
+
+.segmented {
+  width: 100%;
+  background: #f1f5f9; /* light gray bar */
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  padding: 6px; /* space around white pill */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 12px 0 18px;
+}
+
+.segmentBtn {
+  height: 40px;
+  border: none;
+  border-radius: 999px;
+  background: transparent; /* inactive */
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+  color: #0f172a;
+  transition: background 160ms ease, box-shadow 160ms ease;
+}
+
+.segmentBtnActive {
+  background: #ffffff; /* active white pill */
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.12);
+}
+
+/* =========================
+   SIGN UP: wider card + 2-column layout
+========================= */
+
+.authCardWide {
+  width: min(760px, 100%);
+}
+
+.twoCol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 600px) {
+  .twoCol {
+    grid-template-columns: 1fr;
+  }
+}

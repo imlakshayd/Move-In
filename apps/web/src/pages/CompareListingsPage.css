@@ -1,0 +1,170 @@
+.comparePage {
+  background: #f6f7fb;
+  min-height: 100vh;
+}
+
+.compareWrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 18px 16px 50px;
+}
+
+.compareHead h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 900;
+  color: #111827;
+}
+
+.compareHead p {
+  margin: 6px 0 18px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.compareEmpty {
+  background: #fff;
+  border: 1px solid #e6e9f2;
+  border-radius: 14px;
+  padding: 18px;
+  color: #111827;
+  display: grid;
+  gap: 14px;
+  box-shadow: 0 10px 24px rgba(17, 24, 39, 0.06);
+}
+
+/* TABLE LAYOUT */
+.table {
+  background: #fff;
+  border: 1px solid #e6e9f2;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(17, 24, 39, 0.06);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 220px repeat(3, 1fr);
+}
+
+@media (max-width: 980px) {
+  .row {
+    grid-template-columns: 160px repeat(2, 1fr);
+  }
+}
+
+.rowHeader {
+  background: #f9fafb;
+}
+
+.cell {
+  border-top: 1px solid #eef0f4;
+  border-right: 1px solid #eef0f4;
+  padding: 12px;
+}
+
+.leftBlank {
+  background: #f9fafb;
+  border-top: none;
+}
+
+.headerCard {
+  border-top: none;
+  display: grid;
+  gap: 8px;
+  justify-items: stretch;
+  align-content: start;
+}
+
+.headerImg {
+  height: 90px;
+  border-radius: 10px;
+  background: #eef0f4;
+  display: grid;
+  place-items: center;
+  font-size: 26px;
+  color: #9aa3b2;
+}
+
+.headerName {
+  font-size: 13px;
+  font-weight: 900;
+  color: #111827;
+}
+
+.headerVerified {
+  font-size: 12px;
+  font-weight: 800;
+  color: #16a34a;
+}
+
+.headerBtn {
+  height: 34px;
+  border: none;
+  border-radius: 8px;
+  background: #43b049;
+  color: #fff;
+  font-weight: 900;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.headerBtnGhost {
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid #e6e9f2;
+  background: #fff;
+  font-weight: 900;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.labelCell {
+  font-size: 12px;
+  font-weight: 800;
+  color: #374151;
+  background: #fff;
+}
+
+.valueCell {
+  font-size: 12px;
+  color: #111827;
+  background: #fff;
+}
+
+.valueLine {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.bestCell {
+  background: #ecfdf5;
+}
+
+.bestBadge {
+  font-size: 11px;
+  font-weight: 900;
+  background: #43b049;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.compareBottom {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.backBtn {
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid #e6e9f2;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 900;
+  font-size: 12px;
+}

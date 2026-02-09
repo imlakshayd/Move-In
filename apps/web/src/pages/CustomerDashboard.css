@@ -1,0 +1,229 @@
+.cust-page {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px 16px 60px;
+}
+
+.cust-header h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.muted {
+  color: #6b7280;
+  margin-top: 6px;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 18px 0 16px;
+}
+
+.stat-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 14px;
+  background: #fff;
+}
+
+.stat-title {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.tab {
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  padding: 8px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.tab-active {
+  background: #e8f5e9;
+  border-color: #34c759;
+}
+
+.filters {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 12px 0 14px;
+}
+
+.searchbox {
+  flex: 1;
+}
+
+.searchbox input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+}
+
+select {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.card {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #fff;
+  padding: 16px;
+}
+
+.booking-card {
+  display: grid;
+  grid-template-columns: 1fr 180px;
+  gap: 14px;
+}
+
+.card-right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.vendor {
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.sub {
+  color: #6b7280;
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 16px;
+  margin-top: 12px;
+}
+
+.kv .k {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.kv .v {
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+.total {
+  margin-top: 10px;
+  font-weight: 700;
+}
+
+.money {
+  color: #16a34a;
+}
+
+.pill {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+}
+
+.pill-confirmed { background: #e8f5e9; border-color: #34c759; }
+.pill-progress { background: #fff7ed; border-color: #fb923c; }
+.pill-completed { background: #eff6ff; border-color: #60a5fa; }
+.pill-cancelled { background: #fef2f2; border-color: #fca5a5; }
+
+.btn {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.btn-primary {
+  background: #22c55e;
+  color: white;
+  border-color: #22c55e;
+}
+
+.btn-danger {
+  border-color: #fca5a5;
+  color: #ef4444;
+}
+
+.btn-ghost {
+  background: #f9fafb;
+}
+
+.btn-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.vendor-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.vendor-meta {
+  margin-top: 6px;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.review-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.stars {
+  margin-top: 6px;
+  letter-spacing: 1px;
+}
+
+.review-text {
+  margin-top: 10px;
+  color: #111827;
+}
+
+.empty {
+  padding: 18px;
+  text-align: center;
+  color: #6b7280;
+}
+
