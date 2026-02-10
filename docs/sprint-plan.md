@@ -70,7 +70,7 @@ The goal is to coordinate frontend, backend, database, and documentation efforts
 
 ### 🐳 DevOps (Lakshay)
 - Setup Docker environment
-- Ensure PostgreSQL runs in container
+- Ensure Supabase integration is configured
 - Coordinate integration
 - Support teammates with environment issues
 
