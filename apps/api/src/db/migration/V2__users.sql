@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS users (
 	last_name VARCHAR(100) NOT NULL,
 	role user_role NOT NULL,
 	is_active BOOLEAN NOT NULL DEFAULT TRUE,
-	last_login TIMESTAMPTZ,
+	last_login TIMESTAMPS,
 	created_at TIMESTAMPTZ NOT NULL NOW(),
 	updated_at TIMESTAMPTZ NOT NULL NOW()
 );

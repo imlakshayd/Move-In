@@ -1,0 +1,14 @@
+.git
+.github
+node_modules
+apps/api/node_modules
+apps/web/node_modules
+npm-debug.log
+*.log
+.env
+.env.*
+infra/.env
+infra/.env.*
+dist
+build
+coverage
