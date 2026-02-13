@@ -10,7 +10,7 @@
   color: #0f172a;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 
-  /* prevents “shrunk text” on some browsers */
+  
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
 }
@@ -21,7 +21,7 @@
   place-items: center;
 }
 
-/* ✅ Bigger default card (Sign In) */
+
 .authCard {
   width: min(560px, 92vw);
   border: 1px solid #e2e8f0;
@@ -103,16 +103,16 @@
   text-decoration: underline;
 }
 
-/* ✅ FIXED: remember me row (no wrapping + aligned) */
+
 .rememberRow {
-  display: inline-flex;        /* keeps checkbox + text tight */
+  display: inline-flex;        
   align-items: center;
   justify-content: flex-start;
   gap: 8px;
   margin: 14px 0 16px;
   color: #334155;
   font-size: 13px;
-  white-space: nowrap;         /* prevents "Remember" / "me" wrapping */
+  white-space: nowrap;         
 }
 
 .rememberRow input[type="checkbox"] {
@@ -187,7 +187,7 @@
   transform: translateY(1px);
 }
 
-/* NEW: role selection UI */
+
 .roleHint {
   margin: 8px 0 12px;
   font-size: 12px;

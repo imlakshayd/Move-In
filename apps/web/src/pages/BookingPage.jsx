@@ -189,7 +189,7 @@ export default function BookingPage() {
   const hoursUsed = Math.max(Number(hours) || 0, vendor.minimumHours);
   const bookingDate = moveDate ? formatDate(moveDate) : "Select a date";
 
-  // ✅ add handlers (optional)
+  
   const openTerms = () => navigate("/terms");
   const openPrivacy = () => navigate("/privacy");
 

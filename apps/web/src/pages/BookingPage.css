@@ -1,4 +1,3 @@
-/* BookingPage.css — Payment tab matches screenshot */
 
 * { box-sizing: border-box; }
 
@@ -242,7 +241,7 @@ textarea { min-height: 96px; resize: vertical; }
   box-shadow: none;
 }
 
-/* Payment bottom buttons look like screenshot */
+
 .payActions { margin-top: 16px; }
 .wideBtn { min-width: 180px; }
 
@@ -289,9 +288,7 @@ textarea { min-height: 96px; resize: vertical; }
 
 .noteIcon { opacity: 0.6; margin-top: 1px; }
 
-/* =========================
-   ✅ Payment styles (NEW)
-========================= */
+
 .secureRow {
   display: inline-flex;
   align-items: center;
@@ -497,9 +494,7 @@ textarea { min-height: 96px; resize: vertical; }
   .cardSide { position: static; }
   .line { width: 54px; }
 }
-/* =========================
-   Confirmation (screenshot style)
-========================= */
+
 .confirmPanel {
   border: 1px solid #e5e7eb;
   border-radius: 14px;
@@ -616,7 +611,7 @@ textarea { min-height: 96px; resize: vertical; }
   opacity: 0.6;
   margin-top: 1px;
 }
-/* Link-looking button (for Terms/Privacy in Booking page) */
+
 .linkInlineBtn {
   border: none;
   background: transparent;
