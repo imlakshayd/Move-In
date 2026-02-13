@@ -1,10 +1,12 @@
 import React, { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./CustomerDashboard.css";
 import DashboardTopbar from "../components/DashboardTopbar";
 
 const MOCK_BOOKINGS = [
   {
     id: "BK-2024-001",
+    vendorId: "swift",
     vendorName: "Swift Movers LLC",
     status: "Confirmed",
     date: "November 25, 2024",
@@ -15,6 +17,7 @@ const MOCK_BOOKINGS = [
   },
   {
     id: "BK-2024-002",
+    vendorId: "city",
     vendorName: "City Haulers",
     status: "In Progress",
     date: "November 28, 2024",
@@ -25,6 +28,7 @@ const MOCK_BOOKINGS = [
   },
   {
     id: "BK-2024-003",
+    vendorId: "pro",
     vendorName: "Pro Transport Co.",
     status: "Completed",
     date: "October 15, 2024",
@@ -36,8 +40,8 @@ const MOCK_BOOKINGS = [
 ];
 
 const MOCK_SAVED_VENDORS = [
-  { id: "V-1", name: "Swift Movers LLC", rating: 4.9, reviews: 342, price: 89 },
-  { id: "V-2", name: "Pro Transport Co.", rating: 4.8, reviews: 256, price: 75 },
+  { id: "swift", name: "Swift Movers LLC", rating: 4.9, reviews: 342, price: 89 },
+  { id: "pro", name: "Pro Transport Co.", rating: 4.8, reviews: 256, price: 75 },
 ];
 
 const MOCK_REVIEWS = [
@@ -68,18 +72,15 @@ function StatusPill({ status }) {
 }
 
 export default function CustomerDashboardPage() {
-  // Use fullName if you have it, fallback to username
+  const navigate = useNavigate();
+
   const username =
     localStorage.getItem("fullName") ||
     localStorage.getItem("username") ||
     "customer";
 
-  const [activeTab, setActiveTab] = useState("bookings"); // bookings | vendors | reviews
-
-  // Topbar search (global)
+  const [activeTab, setActiveTab] = useState("bookings"); 
   const [topSearch, setTopSearch] = useState("");
-
-  // Bookings filters
   const [statusFilter, setStatusFilter] = useState("All Status");
 
   const [bookings, setBookings] = useState(MOCK_BOOKINGS);
@@ -95,7 +96,6 @@ export default function CustomerDashboardPage() {
     return { upcoming, completed, vendors };
   }, [bookings, savedVendors]);
 
-  // Use topSearch for filtering bookings (so the top bar actually works)
   const filteredBookings = useMemo(() => {
     const s = topSearch.trim().toLowerCase();
 
@@ -114,13 +114,15 @@ export default function CustomerDashboardPage() {
     });
   }, [bookings, topSearch, statusFilter]);
 
-  // Actions
+  
   const onViewDetails = (booking) => {
-    alert(`View Details: ${booking.id} (${booking.vendorName})`);
+    if (!booking.vendorId) return;
+    navigate(`/vendor/${booking.vendorId}`);
   };
 
   const onMessageVendor = (booking) => {
-    alert(`Message vendor: ${booking.vendorName}`);
+    // change later to your real messages route
+    navigate(`/customer?tab=messages&bookingId=${encodeURIComponent(booking.id)}`);
   };
 
   const onCancelBooking = (booking) => {
@@ -130,21 +132,17 @@ export default function CustomerDashboardPage() {
     if (!ok) return;
 
     setBookings((prev) =>
-      prev.map((b) =>
-        b.id === booking.id ? { ...b, status: "Cancelled" } : b
-      )
+      prev.map((b) => (b.id === booking.id ? { ...b, status: "Cancelled" } : b))
     );
   };
 
-  const onVendorView = (vendor) => alert(`View vendor: ${vendor.name}`);
-  const onVendorBook = (vendor) => alert(`Book vendor: ${vendor.name}`);
-  const onUnsaveVendor = (vendorId) => {
+  const onVendorView = (vendor) => navigate(`/vendor/${vendor.id}`);
+  const onVendorBook = (vendor) => navigate(`/book/${vendor.id}`);
+  const onUnsaveVendor = (vendorId) =>
     setSavedVendors((prev) => prev.filter((v) => v.id !== vendorId));
-  };
 
   return (
     <>
-      {/* ✅ Top bar like your screenshot */}
       <DashboardTopbar searchValue={topSearch} onSearchChange={setTopSearch} />
 
       <div className="cust-page">
@@ -174,18 +172,21 @@ export default function CustomerDashboardPage() {
           <button
             className={`tab ${activeTab === "bookings" ? "tab-active" : ""}`}
             onClick={() => setActiveTab("bookings")}
+            type="button"
           >
             My Bookings
           </button>
           <button
             className={`tab ${activeTab === "vendors" ? "tab-active" : ""}`}
             onClick={() => setActiveTab("vendors")}
+            type="button"
           >
             Saved Vendors
           </button>
           <button
             className={`tab ${activeTab === "reviews" ? "tab-active" : ""}`}
             onClick={() => setActiveTab("reviews")}
+            type="button"
           >
             My Reviews
           </button>
@@ -194,10 +195,10 @@ export default function CustomerDashboardPage() {
         {/* BOOKINGS TAB */}
         {activeTab === "bookings" && (
           <>
-            {/* Keep Status filter (top search is in header now) */}
-            <div className="filters">
-              <div className="searchbox">
-                {/* Optional: show what you typed in top search */}
+           
+            <div className="booking-toolbar">
+              <div className="booking-search">
+                <span className="bk-icon" aria-hidden="true">🔍</span>
                 <input
                   value={topSearch}
                   onChange={(e) => setTopSearch(e.target.value)}
@@ -205,76 +206,92 @@ export default function CustomerDashboardPage() {
                 />
               </div>
 
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-              >
-                <option>All Status</option>
-                <option>Confirmed</option>
-                <option>In Progress</option>
-                <option>Completed</option>
-                <option>Cancelled</option>
-              </select>
+              <div className="booking-status">
+                <span className="bk-icon" aria-hidden="true">⚲</span>
+                <select
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value)}
+                >
+                  <option>All Status</option>
+                  <option>Confirmed</option>
+                  <option>In Progress</option>
+                  <option>Completed</option>
+                  <option>Cancelled</option>
+                </select>
+              </div>
             </div>
 
             <div className="list">
-              {filteredBookings.map((b) => (
-                <div key={b.id} className="card booking-card">
-                  <div className="card-left">
-                    <div className="row">
-                      <div className="vendor">{b.vendorName}</div>
-                      <StatusPill status={b.status} />
+              {filteredBookings.map((b) => {
+                const cancelDisabled =
+                  b.status === "Completed" || b.status === "Cancelled";
+
+                return (
+                  <div key={b.id} className="booking-card-sample">
+                    <div className="bk-left">
+                      <div className="bk-head">
+                        <div className="bk-vendor">{b.vendorName}</div>
+                        <StatusPill status={b.status} />
+                      </div>
+
+                      <div className="bk-sub">Booking ID: {b.id}</div>
+
+                      <div className="bk-info">
+                        <div className="bk-item">
+                          <span className="bk-i" aria-hidden="true">📅</span>
+                          <span>{b.date}</span>
+                        </div>
+
+                        <div className="bk-item">
+                          <span className="bk-i" aria-hidden="true">🕒</span>
+                          <span>{b.time}</span>
+                        </div>
+
+                        <div className="bk-item">
+                          <span className="bk-i" aria-hidden="true">📍</span>
+                          <span>{b.pickup}</span>
+                        </div>
+
+                        <div className="bk-item">
+                          <span className="bk-i" aria-hidden="true">📍</span>
+                          <span>{b.dropoff}</span>
+                        </div>
+                      </div>
+
+                      <div className="bk-total">
+                        Total: <span className="bk-money">{money(b.total)}</span>
+                      </div>
                     </div>
 
-                    <div className="sub">Booking ID: {b.id}</div>
-
-                    <div className="grid">
-                      <div className="kv">
-                        <div className="k">Date</div>
-                        <div className="v">{b.date}</div>
-                      </div>
-                      <div className="kv">
-                        <div className="k">Time</div>
-                        <div className="v">{b.time}</div>
-                      </div>
-                      <div className="kv">
-                        <div className="k">Pickup</div>
-                        <div className="v">{b.pickup}</div>
-                      </div>
-                      <div className="kv">
-                        <div className="k">Dropoff</div>
-                        <div className="v">{b.dropoff}</div>
-                      </div>
-                    </div>
-
-                    <div className="total">
-                      Total: <span className="money">{money(b.total)}</span>
+                    <div className="bk-actions">
+                      <button
+                        className="bk-btn"
+                        onClick={() => onViewDetails(b)}
+                        type="button"
+                      >
+                        View Details
+                      </button>
+                      <button
+                        className="bk-btn"
+                        onClick={() => onMessageVendor(b)}
+                        type="button"
+                      >
+                        Message
+                      </button>
+                      <button
+                        className={`bk-btn bk-btn-danger ${
+                          cancelDisabled ? "bk-btn-disabled" : ""
+                        }`}
+                        onClick={() => onCancelBooking(b)}
+                        disabled={cancelDisabled}
+                        type="button"
+                      >
+                        Cancel
+                      </button>
                     </div>
                   </div>
-
-                  <div className="card-right">
-                    <button className="btn" onClick={() => onViewDetails(b)}>
-                      View Details
-                    </button>
-                    <button className="btn" onClick={() => onMessageVendor(b)}>
-                      Message
-                    </button>
-                    <button
-                      className={`btn btn-danger ${
-                        b.status === "Completed" || b.status === "Cancelled"
-                          ? "btn-disabled"
-                          : ""
-                      }`}
-                      onClick={() => onCancelBooking(b)}
-                      disabled={
-                        b.status === "Completed" || b.status === "Cancelled"
-                      }
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
 
               {filteredBookings.length === 0 && (
                 <div className="empty">No bookings found.</div>
@@ -297,18 +314,20 @@ export default function CustomerDashboardPage() {
                 </div>
 
                 <div className="vendor-actions">
-                  <button className="btn" onClick={() => onVendorView(v)}>
+                  <button className="btn" onClick={() => onVendorView(v)} type="button">
                     View
                   </button>
                   <button
                     className="btn btn-primary"
                     onClick={() => onVendorBook(v)}
+                    type="button"
                   >
                     Book
                   </button>
                   <button
                     className="btn btn-ghost"
                     onClick={() => onUnsaveVendor(v.id)}
+                    type="button"
                   >
                     Unsave
                   </button>

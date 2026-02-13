@@ -3,6 +3,8 @@ import { useState } from "react";
 import Navbar from "../components/Navbar";
 import "./Auth.css";
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export default function SignInPage() {
   const navigate = useNavigate();
 
@@ -12,99 +14,202 @@ export default function SignInPage() {
   // roles: customer | vendor | support | admin
   const [role, setRole] = useState("");
 
+  const [rememberMe, setRememberMe] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [attempted, setAttempted] = useState(false); // ✅ show errors after first submit click
+
   function handleQuickRole(selectedRole) {
     setRole(selectedRole);
+
+    // clear role error when selecting a role
+    setErrors((prev) => {
+      if (!prev.role) return prev;
+      const copy = { ...prev };
+      delete copy.role;
+      return copy;
+    });
+  }
+
+  function validate(values) {
+    const next = {};
+
+    if (!values.role) {
+      next.role = "Please select a role (Customer / Vendor / Support / Admin).";
+    }
+
+    const cleanEmail = values.email.trim();
+    if (!cleanEmail) {
+      next.email = "Email is required.";
+    } else if (!EMAIL_RE.test(cleanEmail)) {
+      next.email = "Please enter a valid email (you@example.com).";
+    }
+
+    const cleanPassword = values.password.trim();
+    if (!cleanPassword) {
+      next.password = "Password is required.";
+    } else if (cleanPassword.length < 6) {
+      next.password = "Password must be at least 6 characters.";
+    }
+
+    return next;
   }
 
   function handleSignIn(e) {
     e.preventDefault();
+    setAttempted(true);
 
-    if (!role) {
-      alert("Please select a role first (Customer / Vendor / Support / Admin).");
-      return;
-    }
+    const v = validate({ email, password, role });
+    setErrors(v);
+    if (Object.keys(v).length > 0) return;
 
-    if (!email.trim() || !password.trim()) {
-      alert("Please enter your email and password.");
-      return;
-    }
+    const cleanEmail = email.trim();
+    const nameGuess = cleanEmail.split("@")[0] || "Customer";
 
-    // ✅ TEMP: frontend-only auth (later replace with API login)
-    localStorage.setItem("isLoggedIn", "true");
-    localStorage.setItem("role", role);
-    localStorage.setItem("email", email.trim());
+    // ✅ Store auth in BOTH so ProtectedRoute always finds it
+    const authPayload = {
+      isLoggedIn: "true",
+      role,
+      email: cleanEmail,
+      fullName: nameGuess,
+    };
 
-    // Optional: store a display name (for dashboard greeting)
-    // For now we set a simple one based on email
-    const nameGuess = email.split("@")[0] || "Customer";
-    localStorage.setItem("fullName", nameGuess);
+    Object.entries(authPayload).forEach(([k, val]) => {
+      localStorage.setItem(k, val);
+      sessionStorage.setItem(k, val);
+    });
 
-    // ✅ Redirect based on role
-    if (role === "customer") {
-      navigate("/customer");
-    } else {
-      navigate("/");
-    }
+    // ✅ Redirect
+    const target =
+      role === "customer"
+        ? "/customer"
+        : role === "vendor"
+        ? "/list-your-truck"
+        : "/";
+
+    navigate(target, { replace: true });
+
+    // fallback (in case something blocks router navigation)
+    setTimeout(() => {
+      if (window.location.pathname !== target) {
+        window.location.assign(target);
+      }
+    }, 50);
   }
+
+  const fieldClass = (key) => `authInput ${errors[key] ? "inputError" : ""}`;
 
   return (
     <div className="authPage">
       <Navbar />
 
       <main className="authMain">
-        <form className="authCard" onSubmit={handleSignIn}>
+        <form className="authCard" onSubmit={handleSignIn} noValidate>
           <h1 className="authTitle">Welcome Back</h1>
           <p className="authSubtitle">Sign in to your Move-In account</p>
+
+          {/* ✅ Global error summary (shows after clicking Sign In) */}
+          {attempted && Object.keys(errors).length > 0 && (
+            <div className="formErrorBox" role="alert" aria-live="polite">
+              <strong>Please fix the following:</strong>
+              <ul>
+                {Object.values(errors).map((msg, i) => (
+                  <li key={i}>{msg}</li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {/* Email */}
           <label className="fieldLabel">Email Address</label>
           <div className="inputWrap">
-            <span className="inputIcon">📧</span>
+            <span className="inputIcon" aria-hidden="true">
+              📧
+            </span>
             <input
-              className="authInput"
+              className={fieldClass("email")}
               type="email"
               placeholder="you@example.com"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                // clear email error while typing
+                setErrors((prev) => {
+                  if (!prev.email) return prev;
+                  const copy = { ...prev };
+                  delete copy.email;
+                  return copy;
+                });
+              }}
               autoComplete="email"
+              aria-invalid={Boolean(errors.email)}
             />
           </div>
+          {attempted && errors.email && (
+            <div className="fieldError">{errors.email}</div>
+          )}
 
           {/* Password */}
           <div className="rowBetweenAuth">
             <label className="fieldLabel">Password</label>
-            <button className="linkSmall" type="button">
+            <button
+              className="linkSmall"
+              type="button"
+              onClick={() => alert("Coming soon!")}
+            >
               Forgot password?
             </button>
           </div>
 
           <div className="inputWrap">
-            <span className="inputIcon">🔒</span>
+            <span className="inputIcon" aria-hidden="true">
+              🔒
+            </span>
             <input
-              className="authInput"
+              className={fieldClass("password")}
               type="password"
               placeholder="••••••••"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                // clear password error while typing
+                setErrors((prev) => {
+                  if (!prev.password) return prev;
+                  const copy = { ...prev };
+                  delete copy.password;
+                  return copy;
+                });
+              }}
               autoComplete="current-password"
+              aria-invalid={Boolean(errors.password)}
             />
           </div>
+          {attempted && errors.password && (
+            <div className="fieldError">{errors.password}</div>
+          )}
 
           {/* Remember me */}
           <div className="rememberRow">
-            <input type="checkbox" id="remember" />
+            <input
+              type="checkbox"
+              id="remember"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+            />
             <label htmlFor="remember">Remember me</label>
           </div>
 
-          {/* Selected role indicator */}
+          {/* Role indicator */}
           <div className="roleHint">
             Selected role:{" "}
             <span className={role ? "roleSelected" : "roleMissing"}>
-              {role ? role : "None"}
+              {role || "None"}
             </span>
           </div>
+          {attempted && errors.role && (
+            <div className="fieldError">{errors.role}</div>
+          )}
 
-          {/* Sign in */}
+          {/* ✅ IMPORTANT: button is NOT disabled anymore */}
           <button className="authBtn" type="submit">
             Sign In
           </button>
@@ -116,9 +221,7 @@ export default function SignInPage() {
             <div className="quickGrid">
               <button
                 type="button"
-                className={`quickBtn ${
-                  role === "customer" ? "quickBtnActive" : ""
-                }`}
+                className={`quickBtn ${role === "customer" ? "quickBtnActive" : ""}`}
                 onClick={() => handleQuickRole("customer")}
               >
                 Customer
@@ -134,9 +237,7 @@ export default function SignInPage() {
 
               <button
                 type="button"
-                className={`quickBtn ${
-                  role === "support" ? "quickBtnActive" : ""
-                }`}
+                className={`quickBtn ${role === "support" ? "quickBtnActive" : ""}`}
                 onClick={() => handleQuickRole("support")}
               >
                 Support
@@ -170,5 +271,3 @@ export default function SignInPage() {
     </div>
   );
 }
-
-
