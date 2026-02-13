@@ -1,18 +1,35 @@
 version: "3.9"
 
 services:
-  postgres:
-    image: postgres:15
-    container_name: postgres
+  api:
+    build:
+      context: ..
+      dockerfile: apps/api/Dockerfile
     environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: password
+      PORT: 5000
+      NODE_ENV: production
     ports:
-      - "5432:5432"
-    volumes:
-      - pg_data:/var/lib/postgresql/data
-      - ../apps/api/src/db/migration:/docker-entrypoint-initdb.d
+      - "5000:5000"
+    networks:
+      - movein
+    # Load env file if available
+    env_file:
+      - ../apps/api/.env
 
-volumes:
-  pg_data:
+  web:
+    build:
+      context: ..
+      dockerfile: apps/web/Dockerfile
+      args:
+        REACT_APP_API_URL: ${REACT_APP_API_URL:-http://localhost:5000}
+    depends_on:
+      api:
+        condition: service_started
+    ports:
+      - "3000:80"
+    networks:
+      - movein
+
+networks:
+  movein:
+    driver: bridge
