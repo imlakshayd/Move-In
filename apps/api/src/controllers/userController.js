@@ -19,38 +19,6 @@ async function locateUserById(req, res) {
   }
 }
 
-// Get all users
-
-async function getAllUsers(req, res) {
-  try {
-    const { data, error } = await supabase
-      .from("users")
-      .select("*");
-
-    if (error) throw error;
-
-    return res.json({ success: true, users: data });
-  } catch (err) {
-    return res.status(500).json({ success: false, message: err.message });
-  }
-}
-
-
-// Get all vendors
-async function getAllVendors(req, res) {
-  try {
-    const { data, error } = await supabase
-      .from("vendor") // your table name
-      .select("*");
-
-    if (error) throw error;
-
-    return res.json({ success: true, vendors: data });
-  } catch (err) {
-    return res.status(500).json({ success: false, message: err.message });
-  }
-}
-
 // Create a new user
 async function registerNewUser(req, res) {
   try {
@@ -86,6 +54,23 @@ async function registerNewUser(req, res) {
 }
 
 
+// Get all users
+
+async function getAllUsers(req, res) {
+  try {
+    const { data, error } = await supabase
+      .from("users")
+      .select("*");
+
+    if (error) throw error;
+
+    return res.json({ success: true, users: data });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: err.message });
+  }
+}
+
+
 // Create a Vendor
 async function vendor(req, res) {
   try {
@@ -108,6 +93,21 @@ async function vendor(req, res) {
     if (error) throw error;
 
     return res.status(201).json({ success: true, vendor: data });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: err.message });
+  }
+}
+
+// Get all vendors
+async function getAllVendors(req, res) {
+  try {
+    const { data, error } = await supabase
+      .from("vendor") // your table name
+      .select("*");
+
+    if (error) throw error;
+
+    return res.json({ success: true, vendors: data });
   } catch (err) {
     return res.status(500).json({ success: false, message: err.message });
   }
