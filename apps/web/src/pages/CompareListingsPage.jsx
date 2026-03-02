@@ -1,9 +1,9 @@
+// apps/web/src/pages/CompareListingsPage.jsx
 import React, { useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "./CompareListingsPage.css";
-
 
 const VENDORS = [
   {
@@ -118,8 +118,12 @@ function useQuery() {
 export default function CompareListingsPage() {
   const navigate = useNavigate();
   const query = useQuery();
+
   const idsParam = query.get("ids") || "";
-  const ids = idsParam.split(",").map((s) => s.trim()).filter(Boolean);
+  const ids = idsParam
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
 
   const selected = useMemo(() => {
     return ids.map((id) => VENDORS.find((v) => v.id === id)).filter(Boolean);
@@ -156,6 +160,9 @@ export default function CompareListingsPage() {
 
   const viewDetails = (id) => navigate(`/vendor/${id}`);
 
+  
+  const bookNow = (id) => navigate(`/book/${id}`);
+
   return (
     <div className="comparePage">
       <Navbar />
@@ -169,7 +176,11 @@ export default function CompareListingsPage() {
         {selected.length < 2 ? (
           <div className="compareEmpty">
             Please select at least 2 services to compare.
-            <button className="backBtn" type="button" onClick={() => navigate("/listings")}>
+            <button
+              className="backBtn"
+              type="button"
+              onClick={() => navigate("/listings")}
+            >
               Back to Browse
             </button>
           </div>
@@ -184,13 +195,23 @@ export default function CompareListingsPage() {
                   <div key={v.id} className="cell headerCard">
                     <div className="headerImg">🚚</div>
                     <div className="headerName">{v.name}</div>
-                    {v.verified && <div className="headerVerified">✅ Verified</div>}
+                    {v.verified && (
+                      <div className="headerVerified">✅ Verified</div>
+                    )}
 
-                    <button className="headerBtn" type="button" onClick={() => viewDetails(v.id)}>
+                    <button
+                      className="headerBtn"
+                      type="button"
+                      onClick={() => viewDetails(v.id)}
+                    >
                       View Details
                     </button>
 
-                    <button className="headerBtnGhost" type="button">
+                    <button
+                      className="headerBtnGhost"
+                      type="button"
+                      onClick={() => bookNow(v.id)}
+                    >
                       Book Now
                     </button>
                   </div>
@@ -207,11 +228,15 @@ export default function CompareListingsPage() {
                     {selected.map((v) => (
                       <div
                         key={v.id}
-                        className={`cell valueCell ${bestId === v.id ? "bestCell" : ""}`}
+                        className={`cell valueCell ${
+                          bestId === v.id ? "bestCell" : ""
+                        }`}
                       >
                         <div className="valueLine">
                           {m.format ? m.format(v[m.key]) : v[m.key]}
-                          {bestId === v.id && <span className="bestBadge">Best</span>}
+                          {bestId === v.id && (
+                            <span className="bestBadge">Best</span>
+                          )}
                         </div>
                       </div>
                     ))}
@@ -221,7 +246,11 @@ export default function CompareListingsPage() {
             </div>
 
             <div className="compareBottom">
-              <button className="backBtn" type="button" onClick={() => navigate("/listings")}>
+              <button
+                className="backBtn"
+                type="button"
+                onClick={() => navigate("/listings")}
+              >
                 Back to Browse
               </button>
             </div>

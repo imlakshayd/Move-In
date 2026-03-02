@@ -1,3 +1,4 @@
+// apps/web/src/App.js
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import HomePage from "./pages/HomePage";
@@ -6,8 +7,9 @@ import SignUpPage from "./pages/SignUpPage";
 import ListYourTruckPage from "./pages/ListYourTruckPage";
 import CustomerDashboardPage from "./pages/CustomerDashboardPage";
 import VendorDetailsPage from "./pages/VendorDetailsPage";
-import ListingsPage from "./pages/ListingsPage";          
-import CompareListingsPage from "./pages/CompareListingsPage"; 
+import ListingsPage from "./pages/ListingsPage";
+import CompareListingsPage from "./pages/CompareListingsPage";
+import BookingPage from "./pages/BookingPage"; 
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -26,7 +28,9 @@ export default function App() {
         <Route path="/listings" element={<ListingsPage />} />
         <Route path="/vendor/:vendorId" element={<VendorDetailsPage />} />
 
-        {/*  Compare page */}
+        <Route path="/book/:vendorId" element={<BookingPage />} />
+
+        {/* Compare page */}
         <Route path="/compare" element={<CompareListingsPage />} />
 
         {/* Customer only */}
@@ -50,7 +54,10 @@ export default function App() {
         />
 
         {/* 404 */}
-        <Route path="*" element={<div style={{ padding: 24 }}>Page not found</div>} />
+        <Route
+          path="*"
+          element={<div style={{ padding: 24 }}>Page not found</div>}
+        />
       </Routes>
     </BrowserRouter>
   );

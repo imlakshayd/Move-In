@@ -1,5 +1,6 @@
+// apps/web/src/pages/VendorDetailsPage.jsx
 import React, { useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "./VendorDetailsPage.css";
@@ -103,9 +104,10 @@ const MOCK_REVIEWS = [
 ];
 
 export default function VendorDetailsPage() {
+  const navigate = useNavigate();
   const { vendorId } = useParams();
-  const vendor = VENDORS[vendorId];
 
+  const vendor = VENDORS[vendorId];
   const [hours, setHours] = useState(2);
 
   const priceBreakdown = useMemo(() => {
@@ -127,6 +129,16 @@ export default function VendorDetailsPage() {
     );
   }
 
+  // ✅ NEW: Book This Vendor goes to your booking page
+  const onBook = () => {
+    // if you want to pass hours too:
+    // navigate(`/book/${vendor.id}?hours=${hours}`);
+    navigate(`/book/${vendor.id}`);
+  };
+
+  // ✅ Optional: make "More from this Vendor" clickable
+  const onGoVendor = (id) => navigate(`/vendor/${id}`);
+
   return (
     <div className="vd-page">
       <Navbar />
@@ -135,7 +147,9 @@ export default function VendorDetailsPage() {
         {/* Left main */}
         <div className="vd-left">
           <div className="vd-heroCard">
-            <div className="vd-heroImage" aria-hidden="true">🚚</div>
+            <div className="vd-heroImage" aria-hidden="true">
+              🚚
+            </div>
 
             <div className="vd-heroInfo">
               <div className="vd-titleRow">
@@ -148,7 +162,9 @@ export default function VendorDetailsPage() {
                 <span className="vd-rating">{vendor.rating}</span>
                 <span className="vd-muted">({vendor.reviewsCount})</span>
                 <span className="vd-dot">•</span>
-                <span className="vd-muted">{vendor.type} • {vendor.location}</span>
+                <span className="vd-muted">
+                  {vendor.type} • {vendor.location}
+                </span>
               </div>
 
               <div className="vd-aboutTitle">About This Service</div>
@@ -156,7 +172,9 @@ export default function VendorDetailsPage() {
 
               <div className="vd-highlights">
                 {vendor.highlights.map((h) => (
-                  <div key={h} className="vd-highlight">✓ {h}</div>
+                  <div key={h} className="vd-highlight">
+                    ✓ {h}
+                  </div>
                 ))}
               </div>
             </div>
@@ -199,7 +217,10 @@ export default function VendorDetailsPage() {
                   <div className="vd-reviewBody">
                     <div className="vd-reviewTop">
                       <div className="vd-reviewName">
-                        {r.name} {r.verified && <span className="vd-miniPill">Verified</span>}
+                        {r.name}{" "}
+                        {r.verified && (
+                          <span className="vd-miniPill">Verified</span>
+                        )}
                       </div>
                       <div className="vd-muted">{r.month}</div>
                     </div>
@@ -241,13 +262,20 @@ export default function VendorDetailsPage() {
 
             <div className="vd-breakdown">
               <Row label="Base" value={`$${priceBreakdown.base.toFixed(2)}`} />
-              <Row label="Service fee" value={`$${priceBreakdown.serviceFee.toFixed(2)}`} />
+              <Row
+                label="Service fee"
+                value={`$${priceBreakdown.serviceFee.toFixed(2)}`}
+              />
               <Row label="Tax" value={`$${priceBreakdown.tax.toFixed(2)}`} />
               <div className="vd-divider" />
-              <Row strong label="Total" value={`$${priceBreakdown.total.toFixed(2)}`} />
+              <Row
+                strong
+                label="Total"
+                value={`$${priceBreakdown.total.toFixed(2)}`}
+              />
             </div>
 
-            <button className="vd-primaryBtn" type="button">
+            <button className="vd-primaryBtn" type="button" onClick={onBook}>
               Book This Vendor
             </button>
 
@@ -259,8 +287,21 @@ export default function VendorDetailsPage() {
           <div className="vd-sideCard">
             <div className="vd-sectionTitle">More from this Vendor</div>
             <div className="vd-miniList">
-              <MiniVendor title="Pro Transport Co." price="$75/hr" rating="4.8" />
-              <MiniVendor title="City Haulers" price="$95/hr" rating="4.7" />
+              <button
+                type="button"
+                className="vd-miniBtn"
+                onClick={() => onGoVendor("pro")}
+              >
+                <MiniVendor title="Pro Transport Co." price="$75/hr" rating="4.8" />
+              </button>
+
+              <button
+                type="button"
+                className="vd-miniBtn"
+                onClick={() => onGoVendor("city")}
+              >
+                <MiniVendor title="City Haulers" price="$95/hr" rating="4.7" />
+              </button>
             </div>
           </div>
         </div>
@@ -295,11 +336,14 @@ function BarRow({ label, pct }) {
 function MiniVendor({ title, price, rating }) {
   return (
     <div className="vd-miniVendor">
-      <div className="vd-miniIcon" aria-hidden="true">🚚</div>
+      <div className="vd-miniIcon" aria-hidden="true">
+        🚚
+      </div>
       <div className="vd-miniBody">
         <div className="vd-miniTitle">{title}</div>
         <div className="vd-miniMeta">
-          <span className="vd-star">★</span> {rating} <span className="vd-dot">•</span> {price}
+          <span className="vd-star">★</span> {rating}{" "}
+          <span className="vd-dot">•</span> {price}
         </div>
       </div>
     </div>

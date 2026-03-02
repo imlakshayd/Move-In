@@ -77,7 +77,7 @@ export default function HomePage() {
               <p className="sectionSubtitle left">Top-rated movers in your area</p>
             </div>
 
-            {/* ✅ View All works now */}
+           
             <button
               className="ghostBtn"
               type="button"
@@ -147,7 +147,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ✅ READY TO GET STARTED BANNER */}
+     
       <section className="ctaBanner">
         <div className="container ctaBannerInner">
           <p className="ctaSmall">Ready to Get Started?</p>
@@ -166,7 +166,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ✅ HOW IT WORKS */}
+      
       <section className="howSection">
         <div className="container centerText">
           <h2 className="howTitle">How It Works</h2>
