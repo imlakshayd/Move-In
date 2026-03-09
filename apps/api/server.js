@@ -8,6 +8,11 @@ app.use(express.json());
 
 const supabase = require("./src/db/supabase");
 
+// Import routes
+const userRoutes = require("./src/routes/userRoutes");
+app.use("/users", userRoutes);
+
+
 app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
