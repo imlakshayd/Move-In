@@ -9,7 +9,7 @@ export default function DashboardTopbar({
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
-  // Get profile info from localStorage (you can replace with real user data later)
+  // Get profile info from localStorage 
   const name = localStorage.getItem("fullName") || localStorage.getItem("username") || "User";
   const email = localStorage.getItem("email") || "user@example.com";
 
@@ -38,10 +38,7 @@ export default function DashboardTopbar({
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("role");
     localStorage.removeItem("token");
-    // keep or remove these as you want:
-    // localStorage.removeItem("username");
-    // localStorage.removeItem("fullName");
-    // localStorage.removeItem("email");
+   
 
     setOpen(false);
     navigate("/signin", { replace: true });
