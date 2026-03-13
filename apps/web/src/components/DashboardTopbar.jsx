@@ -16,6 +16,7 @@ export default function DashboardTopbar({
     "User";
 
   const email = localStorage.getItem("email") || "user@email.com";
+  const role = localStorage.getItem("role") || "customer";
   const initial = username.charAt(0).toUpperCase();
 
   useEffect(() => {
@@ -26,6 +27,7 @@ export default function DashboardTopbar({
     }
 
     document.addEventListener("mousedown", handleClickOutside);
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -37,14 +39,46 @@ export default function DashboardTopbar({
     localStorage.removeItem("username");
     localStorage.removeItem("email");
     localStorage.removeItem("role");
-
     navigate("/signin");
+  };
+
+  const handleDashboardClick = () => {
+    setMenuOpen(false);
+
+    if (role === "vendor") {
+      navigate("/list-your-truck");
+    } else {
+      navigate("/customer");
+    }
+  };
+
+  const handleBrowseClick = () => {
+    setMenuOpen(false);
+    navigate("/listings");
+  };
+
+  const handleMessagesClick = () => {
+    setMenuOpen(false);
+
+    if (role === "vendor") {
+      navigate("/vendor/messages");
+    } else {
+      navigate("/customer?tab=messages");
+    }
   };
 
   return (
     <header className="dashboard-topbar">
       <div className="dashboard-topbar-left">
-        <div className="dashboard-logo" onClick={() => navigate("/")}>
+        <div
+          className="dashboard-logo"
+          onClick={() => navigate("/")}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") navigate("/");
+          }}
+        >
           Move-In
         </div>
       </div>
@@ -81,10 +115,7 @@ export default function DashboardTopbar({
               <button
                 type="button"
                 className="dropdown-link"
-                onClick={() => {
-                  setMenuOpen(false);
-                  navigate("/customer");
-                }}
+                onClick={handleDashboardClick}
               >
                 Dashboard
               </button>
@@ -92,10 +123,7 @@ export default function DashboardTopbar({
               <button
                 type="button"
                 className="dropdown-link"
-                onClick={() => {
-                  setMenuOpen(false);
-                  navigate("/listings");
-                }}
+                onClick={handleBrowseClick}
               >
                 Browse Services
               </button>
@@ -103,10 +131,7 @@ export default function DashboardTopbar({
               <button
                 type="button"
                 className="dropdown-link"
-                onClick={() => {
-                  setMenuOpen(false);
-                  navigate("/customer?tab=messages");
-                }}
+                onClick={handleMessagesClick}
               >
                 💬 Messages
               </button>

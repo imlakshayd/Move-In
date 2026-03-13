@@ -4,6 +4,26 @@ import "./Navbar.css";
 export default function Navbar() {
   const navigate = useNavigate();
 
+  const handleListYourTruck = () => {
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
+
+   
+    if (!token) {
+      navigate("/signin");
+      return;
+    }
+
+    if (role !== "vendor") {
+      alert("Only vendors can list trucks. Please sign in as a vendor.");
+      navigate("/signin");
+      return;
+    }
+
+  
+    navigate("/list-your-truck");
+  };
+
   return (
     <nav className="navbar">
       <div className="navInner">
@@ -16,7 +36,7 @@ export default function Navbar() {
           <button
             className="btnOutline"
             type="button"
-            onClick={() => navigate("/list-your-truck")}
+            onClick={handleListYourTruck}
           >
             List Your Truck
           </button>

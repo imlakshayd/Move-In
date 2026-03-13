@@ -9,7 +9,8 @@ import CustomerDashboardPage from "./pages/CustomerDashboardPage";
 import VendorDetailsPage from "./pages/VendorDetailsPage";
 import ListingsPage from "./pages/ListingsPage";
 import CompareListingsPage from "./pages/CompareListingsPage";
-import BookingPage from "./pages/BookingPage"; 
+import BookingPage from "./pages/BookingPage";
+import VendorMessagesPage from "./pages/VendorMessagesPage";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -27,7 +28,6 @@ export default function App() {
         {/* Browse + Vendor details */}
         <Route path="/listings" element={<ListingsPage />} />
         <Route path="/vendor/:vendorId" element={<VendorDetailsPage />} />
-
         <Route path="/book/:vendorId" element={<BookingPage />} />
 
         {/* Compare page */}
@@ -49,6 +49,15 @@ export default function App() {
           element={
             <ProtectedRoute allowedRoles={["vendor"]}>
               <ListYourTruckPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/vendor/messages"
+          element={
+            <ProtectedRoute allowedRoles={["vendor"]}>
+              <VendorMessagesPage />
             </ProtectedRoute>
           }
         />
