@@ -12,6 +12,20 @@ const supabase = require("./src/db/supabase");
 const userRoutes = require("./src/routes/userRoutes");
 app.use("/users", userRoutes);
 
+const bookingRoutes = require("./src/routes/bookingRoutes");
+app.use("/bookings", bookingRoutes);
+
+const listingRoutes = require("./src/routes/listingRoutes");
+app.use("/listings", listingRoutes);
+
+const vehicleListingRoutes = require("./src/routes/vehicleListingRoutes");
+app.use("/vehicle-listings", vehicleListingRoutes);
+
+const serviceListingRoutes = require("./src/routes/serviceListingRoutes");
+app.use("/service-listings", serviceListingRoutes);
+
+const progressTrackerRoutes = require("./src/routes/progressTrackerRoutes");
+app.use("/progress-trackers", progressTrackerRoutes);
 
 app.get("/health", (req, res) => {
   res.json({ status: "ok" });
