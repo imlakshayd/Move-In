@@ -11,6 +11,7 @@ import ListingsPage from "./pages/ListingsPage";
 import CompareListingsPage from "./pages/CompareListingsPage";
 import BookingPage from "./pages/BookingPage";
 import VendorMessagesPage from "./pages/VendorMessagesPage";
+import SupportDashboardPage from "./pages/SupportDashboardPage";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -53,11 +54,22 @@ export default function App() {
           }
         />
 
+        {/* Vendor + Support */}
         <Route
           path="/vendor/messages"
           element={
-            <ProtectedRoute allowedRoles={["vendor"]}>
+            <ProtectedRoute allowedRoles={["vendor", "support"]}>
               <VendorMessagesPage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Support only */}
+        <Route
+          path="/support/dashboard"
+          element={
+            <ProtectedRoute allowedRoles={["support"]}>
+              <SupportDashboardPage />
             </ProtectedRoute>
           }
         />

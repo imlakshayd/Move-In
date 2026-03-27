@@ -4,10 +4,12 @@ import "./VendorMessagesPage.css";
 
 const INITIAL_CONVERSATIONS = [
   {
-    id: "maya-hayes",
+    id: "customer-1",
+    customerId: "customer-1",
     name: "Maya Hayes",
     bookingId: "BK-2024-045",
     listing: "16ft Box Truck",
+    vendorName: "John Wilson - Swift Movers LLC",
     online: true,
     unread: 1,
     timeLabel: "10:30 AM",
@@ -27,10 +29,12 @@ const INITIAL_CONVERSATIONS = [
     ],
   },
   {
-    id: "mike-chen",
+    id: "customer-3",
+    customerId: "customer-3",
     name: "Mike Chen",
     bookingId: "BK-2024-044",
     listing: "16ft Box Truck",
+    vendorName: "John Wilson - Swift Movers LLC",
     online: false,
     unread: 0,
     timeLabel: "Yesterday",
@@ -64,39 +68,93 @@ function getCurrentTimeLabel() {
 
 export default function VendorMessagesPage() {
   const location = useLocation();
-  const selectedCustomer = location.state?.selectedCustomer || null;
+
+  // supports both old state shape and new state shape
+  const selectedConversationFromState =
+    location.state?.selectedConversation || location.state?.selectedCustomer || null;
 
   const [searchTerm, setSearchTerm] = useState("");
   const [conversations, setConversations] = useState(INITIAL_CONVERSATIONS);
   const [selectedConversationId, setSelectedConversationId] = useState(
-    selectedCustomer?.customerId || INITIAL_CONVERSATIONS[0]?.id
+    selectedConversationFromState?.customerId ||
+      selectedConversationFromState?.id ||
+      INITIAL_CONVERSATIONS[0]?.id
   );
   const [newMessage, setNewMessage] = useState("");
 
   const chatBodyRef = useRef(null);
 
   useEffect(() => {
-    if (!selectedCustomer?.customerId) return;
+    if (!selectedConversationFromState) return;
+
+    const conversationId =
+      selectedConversationFromState.customerId ||
+      selectedConversationFromState.id ||
+      selectedConversationFromState.bookingId;
+
+    if (!conversationId) return;
 
     setConversations((prev) => {
-      const exists = prev.some((c) => c.id === selectedCustomer.customerId);
-      if (exists) return prev;
+      const existingConversation = prev.find((c) => c.id === conversationId);
+
+      if (existingConversation) {
+        return prev.map((conversation) =>
+          conversation.id === conversationId
+            ? {
+                ...conversation,
+                name:
+                  selectedConversationFromState.customerName ||
+                  selectedConversationFromState.name ||
+                  conversation.name,
+                bookingId:
+                  selectedConversationFromState.bookingId || conversation.bookingId,
+                listing:
+                  selectedConversationFromState.listing ||
+                  selectedConversationFromState.vendorName ||
+                  conversation.listing,
+                vendorName:
+                  selectedConversationFromState.vendorName ||
+                  conversation.vendorName,
+                avatar:
+                  getInitials(
+                    selectedConversationFromState.customerName ||
+                      selectedConversationFromState.name ||
+                      conversation.name
+                  ) || conversation.avatar,
+              }
+            : conversation
+        );
+      }
 
       return [
         {
-          id: selectedCustomer.customerId,
-          name: selectedCustomer.customerName,
-          bookingId: selectedCustomer.bookingId,
-          listing: selectedCustomer.listing,
+          id: conversationId,
+          customerId: selectedConversationFromState.customerId || conversationId,
+          name:
+            selectedConversationFromState.customerName ||
+            selectedConversationFromState.name ||
+            "Customer",
+          bookingId: selectedConversationFromState.bookingId || "New Booking",
+          listing:
+            selectedConversationFromState.listing ||
+            selectedConversationFromState.vendorName ||
+            "Move Service",
+          vendorName: selectedConversationFromState.vendorName || "",
           online: true,
           unread: 0,
           timeLabel: "Now",
           preview: "Start your conversation here...",
-          avatar: getInitials(selectedCustomer.customerName),
+          avatar: getInitials(
+            selectedConversationFromState.customerName ||
+              selectedConversationFromState.name ||
+              "Customer"
+          ),
           messages: [
             {
               sender: "customer",
-              text: `Hi, I have a question about booking ${selectedCustomer.bookingId}.`,
+              text: `Hi, I have a question about booking ${
+                selectedConversationFromState.bookingId || ""
+              }.`,
               time: getCurrentTimeLabel(),
             },
           ],
@@ -105,13 +163,18 @@ export default function VendorMessagesPage() {
       ];
     });
 
-    setSelectedConversationId(selectedCustomer.customerId);
-  }, [selectedCustomer]);
+    setSelectedConversationId(conversationId);
+  }, [selectedConversationFromState]);
 
   const filteredConversations = useMemo(() => {
-    return conversations.filter((conversation) =>
-      conversation.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    return conversations.filter((conversation) => {
+      const q = searchTerm.toLowerCase();
+      return (
+        conversation.name.toLowerCase().includes(q) ||
+        conversation.bookingId.toLowerCase().includes(q) ||
+        (conversation.listing || "").toLowerCase().includes(q)
+      );
+    });
   }, [conversations, searchTerm]);
 
   const selectedConversation =
@@ -124,6 +187,18 @@ export default function VendorMessagesPage() {
       chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
     }
   }, [selectedConversation, conversations]);
+
+  const handleSelectConversation = (conversationId) => {
+    setSelectedConversationId(conversationId);
+
+    setConversations((prev) =>
+      prev.map((conversation) =>
+        conversation.id === conversationId
+          ? { ...conversation, unread: 0 }
+          : conversation
+      )
+    );
+  };
 
   const handleSendMessage = () => {
     const trimmed = newMessage.trim();
@@ -186,7 +261,7 @@ export default function VendorMessagesPage() {
                 className={`vendor-conversation-item ${
                   selectedConversationId === conversation.id ? "active" : ""
                 }`}
-                onClick={() => setSelectedConversationId(conversation.id)}
+                onClick={() => handleSelectConversation(conversation.id)}
               >
                 <div className="vendor-conversation-avatar">
                   {conversation.avatar}

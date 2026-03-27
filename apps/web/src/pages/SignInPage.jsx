@@ -16,12 +16,11 @@ export default function SignInPage() {
 
   const [rememberMe, setRememberMe] = useState(false);
   const [errors, setErrors] = useState({});
-  const [attempted, setAttempted] = useState(false); // ✅ show errors after first submit click
+  const [attempted, setAttempted] = useState(false);
 
   function handleQuickRole(selectedRole) {
     setRole(selectedRole);
 
-    // clear role error when selecting a role
     setErrors((prev) => {
       if (!prev.role) return prev;
       const copy = { ...prev };
@@ -65,12 +64,12 @@ export default function SignInPage() {
     const cleanEmail = email.trim();
     const nameGuess = cleanEmail.split("@")[0] || "Customer";
 
-    // ✅ Store auth in BOTH so ProtectedRoute always finds it
     const authPayload = {
       isLoggedIn: "true",
       role,
       email: cleanEmail,
       fullName: nameGuess,
+      rememberMe: rememberMe ? "true" : "false",
     };
 
     Object.entries(authPayload).forEach(([k, val]) => {
@@ -78,17 +77,19 @@ export default function SignInPage() {
       sessionStorage.setItem(k, val);
     });
 
-    // ✅ Redirect
     const target =
       role === "customer"
         ? "/customer"
         : role === "vendor"
         ? "/list-your-truck"
+        : role === "support"
+        ? "/support/dashboard"
+        : role === "admin"
+        ? "/"
         : "/";
 
     navigate(target, { replace: true });
 
-    // fallback (in case something blocks router navigation)
     setTimeout(() => {
       if (window.location.pathname !== target) {
         window.location.assign(target);
@@ -107,7 +108,6 @@ export default function SignInPage() {
           <h1 className="authTitle">Welcome Back</h1>
           <p className="authSubtitle">Sign in to your Move-In account</p>
 
-          {/* ✅ Global error summary (shows after clicking Sign In) */}
           {attempted && Object.keys(errors).length > 0 && (
             <div className="formErrorBox" role="alert" aria-live="polite">
               <strong>Please fix the following:</strong>
@@ -119,7 +119,6 @@ export default function SignInPage() {
             </div>
           )}
 
-          {/* Email */}
           <label className="fieldLabel">Email Address</label>
           <div className="inputWrap">
             <span className="inputIcon" aria-hidden="true">
@@ -132,7 +131,6 @@ export default function SignInPage() {
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
-                // clear email error while typing
                 setErrors((prev) => {
                   if (!prev.email) return prev;
                   const copy = { ...prev };
@@ -148,7 +146,6 @@ export default function SignInPage() {
             <div className="fieldError">{errors.email}</div>
           )}
 
-          {/* Password */}
           <div className="rowBetweenAuth">
             <label className="fieldLabel">Password</label>
             <button
@@ -171,7 +168,6 @@ export default function SignInPage() {
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
-                // clear password error while typing
                 setErrors((prev) => {
                   if (!prev.password) return prev;
                   const copy = { ...prev };
@@ -187,7 +183,6 @@ export default function SignInPage() {
             <div className="fieldError">{errors.password}</div>
           )}
 
-          {/* Remember me */}
           <div className="rememberRow">
             <input
               type="checkbox"
@@ -198,7 +193,6 @@ export default function SignInPage() {
             <label htmlFor="remember">Remember me</label>
           </div>
 
-          {/* Role indicator */}
           <div className="roleHint">
             Selected role:{" "}
             <span className={role ? "roleSelected" : "roleMissing"}>
@@ -209,12 +203,10 @@ export default function SignInPage() {
             <div className="fieldError">{errors.role}</div>
           )}
 
-          {/* ✅ IMPORTANT: button is NOT disabled anymore */}
           <button className="authBtn" type="submit">
             Sign In
           </button>
 
-          {/* Quick login */}
           <div className="quickLogin">
             <div className="quickTitle">Quick login as:</div>
 
@@ -253,7 +245,6 @@ export default function SignInPage() {
             </div>
           </div>
 
-          {/* Bottom */}
           <div className="authBottom">
             Don’t have an account?{" "}
             <Link className="linkInline" to="/signup">
