@@ -85,7 +85,7 @@ export default function SignInPage() {
         : role === "support"
         ? "/support/dashboard"
         : role === "admin"
-        ? "/"
+        ? "/admin-dashboard"
         : "/";
 
     navigate(target, { replace: true });

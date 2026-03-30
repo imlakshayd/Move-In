@@ -12,6 +12,8 @@ import CompareListingsPage from "./pages/CompareListingsPage";
 import BookingPage from "./pages/BookingPage";
 import VendorMessagesPage from "./pages/VendorMessagesPage";
 import SupportDashboardPage from "./pages/SupportDashboardPage";
+import AdminDashboardPage from "./pages/AdminDashboardPage";
+import AllUsersPage from "./pages/AllUsersPage";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -70,6 +72,25 @@ export default function App() {
           element={
             <ProtectedRoute allowedRoles={["support"]}>
               <SupportDashboardPage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Admin only */}
+        <Route
+          path="/admin-dashboard"
+          element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <AdminDashboardPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/users"
+          element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <AllUsersPage />
             </ProtectedRoute>
           }
         />
