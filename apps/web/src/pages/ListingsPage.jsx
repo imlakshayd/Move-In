@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import "./ListingsPage.css";
 
 const VENDORS = [
@@ -520,7 +519,7 @@ export default function ListingsPage() {
         </div>
       </div>
 
-      <Footer />
+      
     </div>
   );
 }

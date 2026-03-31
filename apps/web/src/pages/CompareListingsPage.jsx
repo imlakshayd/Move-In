@@ -2,7 +2,6 @@
 import React, { useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import "./CompareListingsPage.css";
 
 const VENDORS = [
@@ -258,7 +257,7 @@ export default function CompareListingsPage() {
         )}
       </div>
 
-      <Footer />
+    
     </div>
   );
 }

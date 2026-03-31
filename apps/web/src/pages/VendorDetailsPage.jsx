@@ -307,7 +307,7 @@ export default function VendorDetailsPage() {
         </div>
       </div>
 
-      <Footer />
+     
     </div>
   );
 }
