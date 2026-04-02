@@ -39,6 +39,12 @@ app.use("/notifications", notificationRoutes);
 const messageRoutes = require("./src/routes/messageRoutes");
 app.use("/messages", messageRoutes);
 
+const documentRoutes = require("./src/routes/documentRoutes");
+app.use("/documents", documentRoutes);
+
+const searchFilterRoutes = require("./src/routes/searchFilterRoutes");
+app.use("/search-filters", searchFilterRoutes);
+
 app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
