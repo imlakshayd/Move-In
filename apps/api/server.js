@@ -27,6 +27,18 @@ app.use("/service-listings", serviceListingRoutes);
 const progressTrackerRoutes = require("./src/routes/progressTrackerRoutes");
 app.use("/progress-trackers", progressTrackerRoutes);
 
+const paymentRoutes = require("./src/routes/paymentRoutes");
+app.use("/payments", paymentRoutes);
+
+const reviewRoutes = require("./src/routes/reviewRoutes");
+app.use("/reviews", reviewRoutes);
+
+const notificationRoutes = require("./src/routes/notificationRoutes");
+app.use("/notifications", notificationRoutes);
+
+const messageRoutes = require("./src/routes/messageRoutes");
+app.use("/messages", messageRoutes);
+
 app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
