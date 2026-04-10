@@ -16,7 +16,7 @@ export default function SignInPage() {
 
   const [rememberMe, setRememberMe] = useState(false);
   const [errors, setErrors] = useState({});
-  const [attempted, setAttempted] = useState(false); // ✅ show errors after first submit click
+  const [attempted, setAttempted] = useState(false);
 
 
   const handleQuickRole = (r) => {
@@ -68,13 +68,16 @@ export default function SignInPage() {
       const user = await login(email, password);
       // Backend validates that user successfully logged in
 
-      // ✅ Redirect
       const target =
-        user.role === "REGISTERED_USER"
+        user.role === "REGISTERED_USER" || user.role === "customer"
           ? "/customer"
-          : user.role === "VENDOR"
+          : user.role === "VENDOR" || user.role === "vendor"
             ? "/list-your-truck"
-            : "/";
+            : user.role === "support"
+              ? "/support/dashboard"
+              : user.role === "admin"
+                ? "/admin-dashboard"
+                : "/";
 
       navigate(target, { replace: true });
     } catch (err) {
@@ -93,7 +96,6 @@ export default function SignInPage() {
           <h1 className="authTitle">Welcome Back</h1>
           <p className="authSubtitle">Sign in to your Move-In account</p>
 
-          {/* ✅ Global error summary (shows after clicking Sign In) */}
           {attempted && Object.keys(errors).length > 0 && (
             <div className="formErrorBox" role="alert" aria-live="polite">
               <strong>Please fix the following:</strong>
@@ -105,7 +107,6 @@ export default function SignInPage() {
             </div>
           )}
 
-          {/* Email */}
           <label className="fieldLabel">Email Address</label>
           <div className="inputWrap">
             <span className="inputIcon" aria-hidden="true">
@@ -118,7 +119,6 @@ export default function SignInPage() {
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
-                // clear email error while typing
                 setErrors((prev) => {
                   if (!prev.email) return prev;
                   const copy = { ...prev };
@@ -134,7 +134,6 @@ export default function SignInPage() {
             <div className="fieldError">{errors.email}</div>
           )}
 
-          {/* Password */}
           <div className="rowBetweenAuth">
             <label className="fieldLabel">Password</label>
             <button
@@ -157,7 +156,6 @@ export default function SignInPage() {
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
-                // clear password error while typing
                 setErrors((prev) => {
                   if (!prev.password) return prev;
                   const copy = { ...prev };
@@ -173,7 +171,6 @@ export default function SignInPage() {
             <div className="fieldError">{errors.password}</div>
           )}
 
-          {/* Remember me */}
           <div className="rememberRow">
             <input
               type="checkbox"
@@ -184,44 +181,48 @@ export default function SignInPage() {
             <label htmlFor="remember">Remember me</label>
           </div>
 
-          {/* ✅ IMPORTANT: button is NOT disabled anymore */}
           <button className="authBtn" type="submit">
             Sign In
           </button>
 
-          {/* Quick login / Remove mock role */}
-          <div className="quickGrid">
-            <button
-              type="button"
-              className={`quickBtn ${role === "customer" ? "quickBtnActive" : ""}`}
-              onClick={() => handleQuickRole("customer")}
-            >
-              Customer
-            </button>
-            <button
-              type="button"
-              className={`quickBtn ${role === "vendor" ? "quickBtnActive" : ""}`}
-              onClick={() => handleQuickRole("vendor")}
-            >
-              Vendor
-            </button>
-            <button
-              type="button"
-              className={`quickBtn ${role === "support" ? "quickBtnActive" : ""}`}
-              onClick={() => handleQuickRole("support")}
-            >
-              Support
-            </button>
-            <button
-              type="button"
-              className={`quickBtn ${role === "admin" ? "quickBtnActive" : ""}`}
-              onClick={() => handleQuickRole("admin")}
-            >
-              Admin
-            </button>
+          <div className="quickLogin">
+            <div className="quickTitle">Quick login as:</div>
+
+            <div className="quickGrid">
+              <button
+                type="button"
+                className={`quickBtn ${role === "customer" ? "quickBtnActive" : ""}`}
+                onClick={() => handleQuickRole("customer")}
+              >
+                Customer
+              </button>
+
+              <button
+                type="button"
+                className={`quickBtn ${role === "vendor" ? "quickBtnActive" : ""}`}
+                onClick={() => handleQuickRole("vendor")}
+              >
+                Vendor
+              </button>
+
+              <button
+                type="button"
+                className={`quickBtn ${role === "support" ? "quickBtnActive" : ""}`}
+                onClick={() => handleQuickRole("support")}
+              >
+                Support
+              </button>
+
+              <button
+                type="button"
+                className={`quickBtn ${role === "admin" ? "quickBtnActive" : ""}`}
+                onClick={() => handleQuickRole("admin")}
+              >
+                Admin
+              </button>
+            </div>
           </div>
 
-          {/* Bottom */}
           <div className="authBottom">
             Don’t have an account?{" "}
             <Link className="linkInline" to="/signup">

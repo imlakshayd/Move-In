@@ -1,7 +1,8 @@
-import React, { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useMemo, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./CustomerDashboard.css";
 import DashboardTopbar from "../components/DashboardTopbar";
+import CustomerMessagesPage from "./CustomerMessagesPage";
 
 const MOCK_BOOKINGS = [
   {
@@ -40,8 +41,20 @@ const MOCK_BOOKINGS = [
 ];
 
 const MOCK_SAVED_VENDORS = [
-  { id: "swift", name: "Swift Movers LLC", rating: 4.9, reviews: 342, price: 89 },
-  { id: "pro", name: "Pro Transport Co.", rating: 4.8, reviews: 256, price: 75 },
+  {
+    id: "swift",
+    name: "Swift Movers LLC",
+    rating: 4.9,
+    reviews: 342,
+    price: 89,
+  },
+  {
+    id: "pro",
+    name: "Pro Transport Co.",
+    rating: 4.8,
+    reviews: 256,
+    price: 75,
+  },
 ];
 
 const MOCK_REVIEWS = [
@@ -73,19 +86,40 @@ function StatusPill({ status }) {
 
 export default function CustomerDashboardPage() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const username =
     localStorage.getItem("fullName") ||
     localStorage.getItem("username") ||
     "customer";
 
-  const [activeTab, setActiveTab] = useState("bookings"); 
+  const queryParams = new URLSearchParams(location.search);
+  const urlTab = queryParams.get("tab") || "bookings";
+
+  const [activeTab, setActiveTab] = useState(urlTab);
   const [topSearch, setTopSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("All Status");
 
   const [bookings, setBookings] = useState(MOCK_BOOKINGS);
   const [savedVendors, setSavedVendors] = useState(MOCK_SAVED_VENDORS);
   const [reviews] = useState(MOCK_REVIEWS);
+
+  const [selectedConversationVendor, setSelectedConversationVendor] =
+    useState(null);
+
+  useEffect(() => {
+    const validTabs = ["bookings", "vendors", "reviews", "messages"];
+    if (validTabs.includes(urlTab)) {
+      setActiveTab(urlTab);
+    } else {
+      setActiveTab("bookings");
+    }
+  }, [urlTab]);
+
+  const handleTabChange = (tabName) => {
+    setActiveTab(tabName);
+    navigate(`/customer?tab=${tabName}`);
+  };
 
   const stats = useMemo(() => {
     const upcoming = bookings.filter(
@@ -114,15 +148,19 @@ export default function CustomerDashboardPage() {
     });
   }, [bookings, topSearch, statusFilter]);
 
-  
   const onViewDetails = (booking) => {
     if (!booking.vendorId) return;
     navigate(`/vendor/${booking.vendorId}`);
   };
 
   const onMessageVendor = (booking) => {
-    // change later to your real messages route
-    navigate(`/customer?tab=messages&bookingId=${encodeURIComponent(booking.id)}`);
+    setSelectedConversationVendor({
+      vendorId: booking.vendorId,
+      vendorName: booking.vendorName,
+      bookingId: booking.id,
+    });
+    setActiveTab("messages");
+    navigate("/customer?tab=messages");
   };
 
   const onCancelBooking = (booking) => {
@@ -171,34 +209,44 @@ export default function CustomerDashboardPage() {
         <div className="tabs">
           <button
             className={`tab ${activeTab === "bookings" ? "tab-active" : ""}`}
-            onClick={() => setActiveTab("bookings")}
+            onClick={() => handleTabChange("bookings")}
             type="button"
           >
             My Bookings
           </button>
+
           <button
             className={`tab ${activeTab === "vendors" ? "tab-active" : ""}`}
-            onClick={() => setActiveTab("vendors")}
+            onClick={() => handleTabChange("vendors")}
             type="button"
           >
             Saved Vendors
           </button>
+
           <button
             className={`tab ${activeTab === "reviews" ? "tab-active" : ""}`}
-            onClick={() => setActiveTab("reviews")}
+            onClick={() => handleTabChange("reviews")}
             type="button"
           >
             My Reviews
           </button>
+
+          <button
+            className={`tab ${activeTab === "messages" ? "tab-active" : ""}`}
+            onClick={() => handleTabChange("messages")}
+            type="button"
+          >
+            Messages
+          </button>
         </div>
 
-        {/* BOOKINGS TAB */}
         {activeTab === "bookings" && (
           <>
-           
             <div className="booking-toolbar">
               <div className="booking-search">
-                <span className="bk-icon" aria-hidden="true">🔍</span>
+                <span className="bk-icon" aria-hidden="true">
+                  🔍
+                </span>
                 <input
                   value={topSearch}
                   onChange={(e) => setTopSearch(e.target.value)}
@@ -207,7 +255,9 @@ export default function CustomerDashboardPage() {
               </div>
 
               <div className="booking-status">
-                <span className="bk-icon" aria-hidden="true">⚲</span>
+                <span className="bk-icon" aria-hidden="true">
+                  ⚲
+                </span>
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
@@ -271,6 +321,7 @@ export default function CustomerDashboardPage() {
                       >
                         View Details
                       </button>
+
                       <button
                         className="bk-btn"
                         onClick={() => onMessageVendor(b)}
@@ -278,6 +329,7 @@ export default function CustomerDashboardPage() {
                       >
                         Message
                       </button>
+
                       <button
                         className={`bk-btn bk-btn-danger ${
                           cancelDisabled ? "bk-btn-disabled" : ""
@@ -300,7 +352,6 @@ export default function CustomerDashboardPage() {
           </>
         )}
 
-        {/* SAVED VENDORS TAB */}
         {activeTab === "vendors" && (
           <div className="list">
             {savedVendors.map((v) => (
@@ -314,7 +365,11 @@ export default function CustomerDashboardPage() {
                 </div>
 
                 <div className="vendor-actions">
-                  <button className="btn" onClick={() => onVendorView(v)} type="button">
+                  <button
+                    className="btn"
+                    onClick={() => onVendorView(v)}
+                    type="button"
+                  >
                     View
                   </button>
                   <button
@@ -341,7 +396,6 @@ export default function CustomerDashboardPage() {
           </div>
         )}
 
-        {/* REVIEWS TAB */}
         {activeTab === "reviews" && (
           <div className="list">
             {reviews.map((r) => (
@@ -360,6 +414,10 @@ export default function CustomerDashboardPage() {
               </div>
             ))}
           </div>
+        )}
+
+        {activeTab === "messages" && (
+          <CustomerMessagesPage selectedVendor={selectedConversationVendor} />
         )}
       </div>
     </>

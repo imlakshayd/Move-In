@@ -1,0 +1,171 @@
+.all-users-page {
+  min-height: 100vh;
+  background: #f3f4f6;
+  font-family: Arial, sans-serif;
+  color: #1f2937;
+}
+
+.all-users-container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 26px 24px 40px;
+  margin-top: 90px;
+}
+
+.all-users-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.all-users-title {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.all-users-subtitle {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.all-users-back-btn {
+  padding: 10px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  background: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+  white-space: nowrap;
+}
+
+.all-users-back-btn:hover {
+  background: #111827;
+  color: #ffffff;
+  border-color: #111827;
+}
+
+.all-users-card {
+  background: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+  padding: 18px;
+}
+
+.all-users-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.all-users-card-top h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #111827;
+}
+
+.all-users-count {
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.all-users-table-wrap {
+  overflow-x: auto;
+}
+
+.all-users-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.all-users-table th,
+.all-users-table td {
+  text-align: left;
+  padding: 14px 10px;
+}
+
+.all-users-table thead tr {
+  border-bottom: 1px solid #d1d5db;
+}
+
+.all-users-table th {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.all-users-table tbody tr {
+  border-bottom: 1px solid #ececec;
+}
+
+.all-users-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.all-users-name {
+  color: #111827;
+  font-weight: 600;
+}
+
+.all-users-email,
+.all-users-muted {
+  color: #6b7280;
+}
+
+.all-users-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.all-users-role {
+  background: #f9fafb;
+  border: 1px solid #d1d5db;
+  color: #374151;
+}
+
+.all-users-active {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.all-users-pending {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.all-users-empty {
+  text-align: center;
+  padding: 24px;
+  color: #6b7280;
+}
+
+@media (max-width: 768px) {
+  .all-users-container {
+    padding: 20px 16px 32px;
+    margin-top: 84px;
+  }
+
+  .all-users-title {
+    font-size: 28px;
+  }
+
+  .all-users-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
