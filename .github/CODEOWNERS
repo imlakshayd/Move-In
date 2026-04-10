@@ -1,6 +1,5 @@
 # DevOps owns workflows + infra
-.github/ @imlakshayd
-infra/   @imlakshayd
+.github/ @imlakshaydnfra/   @imlakshayd
 *.yml    @imlakshayd
 *.yaml   @imlakshayd
 Dockerfile @imlakshayd

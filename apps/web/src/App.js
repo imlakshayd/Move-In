@@ -9,56 +9,59 @@ import CustomerDashboardPage from "./pages/CustomerDashboardPage";
 import VendorDetailsPage from "./pages/VendorDetailsPage";
 import ListingsPage from "./pages/ListingsPage";
 import CompareListingsPage from "./pages/CompareListingsPage";
-import BookingPage from "./pages/BookingPage"; 
+import BookingPage from "./pages/BookingPage";
 
 import ProtectedRoute from "./components/ProtectedRoute";
+import { AuthProvider } from "./context/AuthContext";
 
 import "./App.css";
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Public */}
-        <Route path="/" element={<HomePage />} />
-        <Route path="/signin" element={<SignInPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* Public */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/signin" element={<SignInPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
 
-        {/* Browse + Vendor details */}
-        <Route path="/listings" element={<ListingsPage />} />
-        <Route path="/vendor/:vendorId" element={<VendorDetailsPage />} />
+          {/* Browse + Vendor details */}
+          <Route path="/listings" element={<ListingsPage />} />
+          <Route path="/vendor/:vendorId" element={<VendorDetailsPage />} />
 
-        <Route path="/book/:vendorId" element={<BookingPage />} />
+          <Route path="/book/:vendorId" element={<BookingPage />} />
 
-        {/* Compare page */}
-        <Route path="/compare" element={<CompareListingsPage />} />
+          {/* Compare page */}
+          <Route path="/compare" element={<CompareListingsPage />} />
 
-        {/* Customer only */}
-        <Route
-          path="/customer"
-          element={
-            <ProtectedRoute allowedRoles={["customer"]}>
-              <CustomerDashboardPage />
-            </ProtectedRoute>
-          }
-        />
+          {/* Customer only */}
+          <Route
+            path="/customer"
+            element={
+              <ProtectedRoute allowedRoles={["REGISTERED_USER", "customer"]}>
+                <CustomerDashboardPage />
+              </ProtectedRoute>
+            }
+          />
 
-        {/* Vendor only */}
-        <Route
-          path="/list-your-truck"
-          element={
-            <ProtectedRoute allowedRoles={["vendor"]}>
-              <ListYourTruckPage />
-            </ProtectedRoute>
-          }
-        />
+          {/* Vendor only */}
+          <Route
+            path="/list-your-truck"
+            element={
+              <ProtectedRoute allowedRoles={["VENDOR", "vendor"]}>
+                <ListYourTruckPage />
+              </ProtectedRoute>
+            }
+          />
 
-        {/* 404 */}
-        <Route
-          path="*"
-          element={<div style={{ padding: 24 }}>Page not found</div>}
-        />
-      </Routes>
-    </BrowserRouter>
+          {/* 404 */}
+          <Route
+            path="*"
+            element={<div style={{ padding: 24 }}>Page not found</div>}
+          />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }

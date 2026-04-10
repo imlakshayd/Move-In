@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useMemo, useState } from "react";
+import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
 import "./Auth.css";
 
@@ -9,6 +10,7 @@ const PHONE_RE = /^[0-9+\-\s()]{7,15}$/;
 
 export default function SignUpPage() {
   const navigate = useNavigate();
+  const { register } = useAuth();
 
   const [accountType, setAccountType] = useState("customer"); // customer | vendor
 
@@ -96,7 +98,7 @@ export default function SignUpPage() {
     if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 
-  function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const v = validate(form);
@@ -107,9 +109,29 @@ export default function SignUpPage() {
       return;
     }
 
-    alert(`Account created as ${accountType}`);
-    navigate("/signin");
-  }
+    // Prepare payload
+    const nameParts = form.name.trim().split(" ");
+
+    // Convert UI roles to DB enums
+    const dbRole = accountType === "customer" ? "REGISTERED_USER" : "VENDOR";
+
+    const payload = {
+      email: form.email,
+      password: form.password,
+      phone_number: form.phone,
+      first_name: nameParts[0] || "User",
+      last_name: nameParts.slice(1).join(" ") || "Name",
+      role: dbRole,
+    };
+
+    try {
+      await register(payload);
+      alert(`Account created successfully! Please sign in.`);
+      navigate("/signin");
+    } catch (err) {
+      setErrors({ email: err.message || "Failed to create account." });
+    }
+  };
 
   const fieldClass = (key) => `authInput ${errors[key] ? "inputError" : ""}`;
 
@@ -138,9 +160,8 @@ export default function SignUpPage() {
           <div className="segmented">
             <button
               type="button"
-              className={`segmentBtn ${
-                accountType === "customer" ? "segmentBtnActive" : ""
-              }`}
+              className={`segmentBtn ${accountType === "customer" ? "segmentBtnActive" : ""
+                }`}
               onClick={() => setAccountType("customer")}
             >
               I need moving services
@@ -148,9 +169,8 @@ export default function SignUpPage() {
 
             <button
               type="button"
-              className={`segmentBtn ${
-                accountType === "vendor" ? "segmentBtnActive" : ""
-              }`}
+              className={`segmentBtn ${accountType === "vendor" ? "segmentBtnActive" : ""
+                }`}
               onClick={() => setAccountType("vendor")}
             >
               I'm a truck owner/vendor

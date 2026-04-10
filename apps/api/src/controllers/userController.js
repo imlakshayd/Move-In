@@ -1,4 +1,6 @@
 const supabase = require("../db/supabase");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 // Get the user by ID from the users table
 async function locateUserById(req, res) {
@@ -34,18 +36,25 @@ async function registerNewUser(req, res) {
       });
     }
 
+    // Hash the password securely
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
     const { data, error } = await supabase
       .from("users")
       .insert([
         {
-          email, password, phone_number, first_name, last_name, role
-          
+          email, password: hashedPassword, phone_number, first_name, last_name, role
+
         }
       ])
       .select("*")
       .single();
 
     if (error) throw error;
+
+    // Do not return the hashed password
+    delete data.password;
 
     return res.status(201).json({ success: true, user: data });
   } catch (err) {
@@ -144,7 +153,7 @@ async function vehicle_owner(req, res) {
 async function getAllVehicleOwner(req, res) {
   try {
     const { data, error } = await supabase
-      .from("vehicle_owner") 
+      .from("vehicle_owner")
       .select("*");
 
     if (error) throw error;
@@ -199,7 +208,7 @@ async function getAllManagers(req, res) {
 // Create a Support Staff
 async function support_staff(req, res) {
   try {
-    const { user_id, department } = req.body; 
+    const { user_id, department } = req.body;
 
     if (!user_id || !department) {
       return res.status(400).json({
@@ -226,7 +235,7 @@ async function support_staff(req, res) {
 async function getAllSupportStaff(req, res) {
   try {
     const { data, error } = await supabase
-      .from("support_staff") 
+      .from("support_staff")
       .select("*");
 
     if (error) throw error;
@@ -237,4 +246,55 @@ async function getAllSupportStaff(req, res) {
   }
 }
 
-module.exports = { locateUserById, registerNewUser, vendor, vehicle_owner, manager, support_staff, getAllVendors, getAllUsers, getAllVehicleOwner, getAllManagers, getAllSupportStaff };
+// Login an existing user
+async function loginUser(req, res) {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing required fields: email, password",
+      });
+    }
+
+    // Attempt to locate user
+    const { data: user, error } = await supabase
+      .from("users")
+      .select("*")
+      .eq("email", email)
+      .single();
+
+    if (error || !user) {
+      return res.status(401).json({ success: false, message: "Invalid email or password" });
+    }
+
+    // Verify password against hash
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return res.status(401).json({ success: false, message: "Invalid email or password" });
+    }
+
+    // Generate JWT
+    const jwtSecret = process.env.JWT_SECRET || "fallback_secret_for_development_purposes";
+    const token = jwt.sign(
+      { userId: user.user_id, email: user.email, role: user.role },
+      jwtSecret,
+      { expiresIn: "24h" }
+    );
+
+    // Remove password from response
+    delete user.password;
+
+    return res.json({
+      success: true,
+      token,
+      user,
+    });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: err.message });
+  }
+}
+
+module.exports = { locateUserById, registerNewUser, loginUser, vendor, vehicle_owner, manager, support_staff, getAllVendors, getAllUsers, getAllVehicleOwner, getAllManagers, getAllSupportStaff };

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 // Import controller functions
-const { locateUserById, registerNewUser, vendor, vehicle_owner, manager, support_staff, getAllVendors, getAllUsers, getAllVehicleOwner, getAllManagers, getAllSupportStaff  } = require("../controllers/userController");
+const { locateUserById, registerNewUser, loginUser, vendor, vehicle_owner, manager, support_staff, getAllVendors, getAllUsers, getAllVehicleOwner, getAllManagers, getAllSupportStaff } = require("../controllers/userController");
 
 // Get all vendors
 router.get("/vendors", getAllVendors);
@@ -19,6 +19,8 @@ router.get("/managers", getAllManagers);
 // Get all support staff
 router.get("/support_staff", getAllSupportStaff);
 
+// Login a user
+router.post("/login", loginUser);
 
 // Create a new user
 router.post("/", registerNewUser);

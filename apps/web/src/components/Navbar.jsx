@@ -1,8 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import "./Navbar.css";
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <nav className="navbar">
@@ -21,13 +28,28 @@ export default function Navbar() {
             List Your Truck
           </button>
 
-          <Link className="linkBtn" to="/signin">
-            Sign In
-          </Link>
-
-          <Link className="btnPrimary" to="/signup">
-            Sign Up
-          </Link>
+          {user ? (
+            <>
+              <Link
+                className="linkBtn"
+                to={user.role === "REGISTERED_USER" ? "/customer" : "/list-your-truck"}
+              >
+                Dashboard
+              </Link>
+              <button className="btnPrimary" onClick={handleLogout}>
+                Sign Out
+              </button>
+            </>
+          ) : (
+            <>
+              <Link className="linkBtn" to="/signin">
+                Sign In
+              </Link>
+              <Link className="btnPrimary" to="/signup">
+                Sign Up
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </nav>
