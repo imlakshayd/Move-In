@@ -12,6 +12,38 @@ const supabase = require("./src/db/supabase");
 const userRoutes = require("./src/routes/userRoutes");
 app.use("/users", userRoutes);
 
+const bookingRoutes = require("./src/routes/bookingRoutes");
+app.use("/bookings", bookingRoutes);
+
+const listingRoutes = require("./src/routes/listingRoutes");
+app.use("/listings", listingRoutes);
+
+const vehicleListingRoutes = require("./src/routes/vehicleListingRoutes");
+app.use("/vehicle-listings", vehicleListingRoutes);
+
+const serviceListingRoutes = require("./src/routes/serviceListingRoutes");
+app.use("/service-listings", serviceListingRoutes);
+
+const progressTrackerRoutes = require("./src/routes/progressTrackerRoutes");
+app.use("/progress-trackers", progressTrackerRoutes);
+
+const paymentRoutes = require("./src/routes/paymentRoutes");
+app.use("/payments", paymentRoutes);
+
+const reviewRoutes = require("./src/routes/reviewRoutes");
+app.use("/reviews", reviewRoutes);
+
+const notificationRoutes = require("./src/routes/notificationRoutes");
+app.use("/notifications", notificationRoutes);
+
+const messageRoutes = require("./src/routes/messageRoutes");
+app.use("/messages", messageRoutes);
+
+const documentRoutes = require("./src/routes/documentRoutes");
+app.use("/documents", documentRoutes);
+
+const searchFilterRoutes = require("./src/routes/searchFilterRoutes");
+app.use("/search-filters", searchFilterRoutes);
 
 app.get("/health", (req, res) => {
   res.json({ status: "ok" });
